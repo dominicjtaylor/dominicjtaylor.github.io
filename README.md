@@ -4,4 +4,4 @@ I'm an Astrophysics PhD student at Durham University researching galaxy evolutio
 
 ## Projects
 
-# Terzan 5
+### Terzan 5
