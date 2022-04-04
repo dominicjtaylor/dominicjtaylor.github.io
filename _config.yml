@@ -1,4 +1,5 @@
-theme: jekyll-theme-cayman
+# theme: jekyll-theme-cayman
+remote_theme: chrisrhymes/bulma-clean-theme
 title: Dominic Taylor's homepage
 markdown: kramdown
 description: I'm a Master's graduate from the University of Liverpool with a love for Astronomy!
