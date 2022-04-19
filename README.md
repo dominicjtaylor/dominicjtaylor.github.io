@@ -1,6 +1,4 @@
-# Dominic Taylor
-
-I'm an Astrophysics PhD student at Durham University researching galaxy evolution over the last 10 billion years by investigating gas dynamics and star formation in large samples of galaxies.
+Astrophysics student with a fascination for Galaxy Formation and Evolution. Here's my personal website where you can find out more about me and my projects.
 
 ## Projects
 
