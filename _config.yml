@@ -1,4 +1,6 @@
 theme: jekyll-theme-cayman
+title: Dominic Taylor
+# description: Research intern at Leibniz-Institut für Astrophysik Postdam. 
 domain: dominicjtaylor.github.io       # if you want to force HTTPS, specify the domain without the http at the start, e.g. example.com
 url: https://dominicjtaylor.github.io  # the base hostname and protocol for your site, e.g. http://example.com
 # baseurl: /REPOSITORY-NAME/             # place folder name if the site is served in a subfolder
