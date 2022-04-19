@@ -1,5 +1,5 @@
 ---
 layout: page
-title: "WHO AM I?"
+title: "Who am I?"
 permalink: /about
 ---
