@@ -1,7 +1,7 @@
 theme: jekyll-theme-cayman
 # remote_theme: https://github.com/poole/hyde
 title: Dominic Taylor
-description: Astrophysics student with a fascination for Galaxy Formation and Evolution. Here’s my personal website where you can find out more about me and my projects.
+description: This is my personal website where you can find out more about me and my projects.
 domain: dominicjtaylor.github.io       # if you want to force HTTPS, specify the domain without the http at the start, e.g. example.com
 url: https://dominicjtaylor.github.io  # the base hostname and protocol for your site, e.g. http://example.com
 # baseurl: /REPOSITORY-NAME/             # place folder name if the site is served in a subfolder
