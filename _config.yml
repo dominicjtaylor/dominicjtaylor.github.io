@@ -1,5 +1,5 @@
 # theme: jekyll-theme-minimal
-theme: default
+layout: default
 # remote_theme: https://github.com/poole/hyde
 title: Dominic Taylor
 description: Hi I'm Dom, this is my personal website where you can find out more about me and my projects!
