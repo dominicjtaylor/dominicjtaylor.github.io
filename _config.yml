@@ -1,5 +1,5 @@
-# theme: jekyll-theme-cayman
-remote_theme: https://github.com/poole/hyde
+theme: jekyll-theme-cayman
+# remote_theme: https://github.com/poole/hyde
 title: Dominic Taylor
 # description: Research intern at Leibniz-Institut für Astrophysik Postdam. 
 domain: dominicjtaylor.github.io       # if you want to force HTTPS, specify the domain without the http at the start, e.g. example.com
