@@ -3,4 +3,4 @@
 ## Projects
 Here are my various projects. You can click their titles for more information!
 
-### Terzan 5
+### [Terzan 5](TERZAN5.md)
