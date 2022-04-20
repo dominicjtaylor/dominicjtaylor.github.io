@@ -1,5 +1,5 @@
 # Terzan 5
-![Terzan 5](terzan5.jpg)
+![Terzan 5](terzan5.jpg "NASA/ESA Hubble Space Telescope image of Terzan 5")
 
 It has been proposed that the globular cluster-like system Terzan 5 is the surviving remnant of a primordial building block of the Milky Way bulge, mainly due to the age/metallicity spread and the distribution of its stars in the α-Fe plane.
 
