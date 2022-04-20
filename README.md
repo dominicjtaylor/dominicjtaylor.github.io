@@ -13,6 +13,6 @@ It has been proposed that the globular cluster-like system Terzan 5 is the survi
 Galaxies grow via hierarchical merging.  The stellar mass - halo mass relation tells us that more massive haloes of dark matter host more massive galaxies, but this relation exhibits significant scatter.  Using the EAGLE cosmological simulations, I investigated the second order influences on the efficiency of galaxy formation by exploring what physical processes correlate with stellar mass at fixed halo mass.
 
 I was able to find that:
-* Feedback influences the ability of galaxies to exploit high gas density in forming stars.
+* Feedback from stars and AGN influences the ability of galaxies in exploiting high gas density to form stars.
 * Low and high-mass early-assembling haloes host more efficiently formed galaxies whereas, between regimes, late-assemblers do.
 * In the EAGLE simulations, the scaling relation between regimes is sensitive to the energy-fraction function and, at high halo mass, is sensitive to the modelling of AGN feedback as it is essential in reproducing observed morphological transformations.
