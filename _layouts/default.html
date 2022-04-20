@@ -30,9 +30,11 @@
         <p class="view"><a href="{{ site.github.owner_url }}">View My GitHub Profile</a></p>
         {% endif %}
         
-        {% for page in site.pages %}
-          <a href={{ page.filename }}>{{ page.title }}</a>
-        {% endfor %}
+        <p class="view"><a href={{ README.md }}><strong>Home Page</strong></a></p>
+        <p class="view"><a href={{ ABOUT.md }}><strong>About Me</strong></a></p>
+        <p class="view"><a href={{ AGN.md }}><strong>Project: Changing-Look AGN</strong></a></p>
+        <p class="view"><a href={{ TERZAN5.md }}><strong>Project: Terzan 5</strong></a></p>
+        <p class="view"><a href={{ EAGLE.md }}><strong>Project: EAGLE</strong></a></p>
 
         {% if site.show_downloads %}
         <ul class="downloads">
