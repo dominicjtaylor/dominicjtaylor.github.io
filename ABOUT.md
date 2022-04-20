@@ -4,7 +4,7 @@
 
 Hi I'm Dom!
 
-I completed my Master's degree in Astrophysics at the University of Liverpool in 2021.  In my third year, I began working with Dr Ricardo Schiavon on an observational [project](TERZAN5.md) at LJMU's Astrophysics Research Institute from which I have been able to write a first-author paper on the topic of Milky Way stellar populations.  The paper, titled "Is Terzan 5 the remnant of a building block of the Galactic bulge? Evidence from APOGEE" has now been [published](https://arxiv.org/abs/2204.01753) on the arXiv preprint and Monthly Notices!
+I completed my Master's degree in Astrophysics at the University of Liverpool in 2021.  In my third year, I began working with Dr Ricardo Schiavon on an observational [project](TERZAN5.md) at LJMU's Astrophysics Research Institute from which I have been able to write a first-author paper on the topic of Milky Way stellar populations.  The paper, titled "Is Terzan 5 the remnant of a building block of the Galactic bulge? Evidence from APOGEE" has now been [published](https://arxiv.org/abs/2204.01753) on the arXiv preprint and in the Monthly Notices!
 
 In my fourth year, I carried out my Master's [project](EAGLE.md) supervised by Prof. Rob Crain on "What Influences the Efficiency of Galaxy Formation?" using the EAGLE cosmological simulations.
 
