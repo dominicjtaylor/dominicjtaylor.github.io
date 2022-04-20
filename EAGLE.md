@@ -1,5 +1,5 @@
 # EAGLE
-![EAGLE snapshot](eagle_zoom_stages1.png "Zooming into an EAGLE galaxy (Fig.1 of Schaye et al. 2014)")
+!["Zooming into an EAGLE galaxy (Fig.1 of Schaye et al. 2014)"](eagle_zoom_stages1.png)
 
 In the cosmological context, galaxies grow via hierarchical merging from the accretion of lower mass systems.  The stellar mass - halo mass relation tells us that more massive haloes of dark matter host more massive galaxies, but this relation exhibits significant scatter i.e. other physical processes must be causing some galaxies to be less massive at some fixed value of halo mass.
 
