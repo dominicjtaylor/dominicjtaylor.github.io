@@ -5,5 +5,5 @@ title: Dominic Taylor
 description: Hi I'm Dom, this is my personal website where you can find out more about me and my projects!
 domain: dominicjtaylor.github.io       # if you want to force HTTPS, specify the domain without the http at the start, e.g. example.com
 url: https://dominicjtaylor.github.io  # the base hostname and protocol for your site, e.g. http://example.com
-logo: me.png
+logo: Cropped_image2.jpg
 show_downloads: true
