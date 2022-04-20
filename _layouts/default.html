@@ -30,15 +30,16 @@
         <p class="view"><a href="{{ site.github.owner_url }}">View My GitHub Profile</a></p>
         {% endif %}
         
-        <p class="view"><a href={{ README.md }}><strong>Home Page</strong></a></p>
-        <p class="view"><a href={{ ABOUT.md }}><strong>About Me</strong></a></p>
-        <p class="view"><a href={{ AGN.md }}><strong>Project: Changing-Look AGN</strong></a></p>
-        <p class="view"><a href={{ TERZAN5.md }}><strong>Project: Terzan 5</strong></a></p>
-        <p class="view"><a href={{ EAGLE.md }}><strong>Project: EAGLE</strong></a></p>
+        <p class="view">
+          <li><a href={{ README.md }}><strong>Home Page</strong></a></li>
+          <li><a href={{ ABOUT.md }}><strong>About Me</strong></a></li>
+          <li><a href={{ AGN.md }}><strong>Project: Changing-Look AGN</strong></a></li>
+          <li><a href={{ TERZAN5.md }}><strong>Project: Terzan 5</strong></a></li>
+          <li><a href={{ EAGLE.md }}><strong>Project: EAGLE</strong></a></li>
+        </p>
 
         {% if site.show_downloads %}
         <ul class="downloads">
-          <li><a [Home Page](README.md)</a></li>
           <li><a href="{{ site.github.tar_url }}">Download <strong>TAR Ball</strong></a></li>
           <li><a href="{{ site.github.repository_url }}">View On <strong>GitHub</strong></a></li>
         </ul>
