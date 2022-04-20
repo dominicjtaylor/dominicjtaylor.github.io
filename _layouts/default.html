@@ -25,18 +25,18 @@
         {% if site.github.is_project_page %}
         <p class="view"><a href="{{ site.github.repository_url }}">View the Project on GitHub <small>{{ site.github.repository_nwo }}</small></a></p>
         {% endif %}
-
+        
+        <p class="view">
+          <li><a href="README.md"><strong>Home Page</strong></a></li>
+          <li><a href="ABOUT.md"><strong>About Me</strong></a></li>
+          <li><a href="AGN.md"><strong>Changing-Look AGN</strong></a></li>
+          <li><a href="TERZAN5.md"><strong>Terzan 5</strong></a></li>
+          <li><a href="EAGLE.md"><strong>EAGLE</strong></a></li>
+        </p>
+        
         {% if site.github.is_user_page %}
         <p class="view"><a href="{{ site.github.owner_url }}">View My GitHub Profile</a></p>
         {% endif %}
-        
-        <p class="view">
-          <li><a href={{ README.md }}><strong>Home Page</strong></a></li>
-          <li><a href={{ ABOUT.md }}><strong>About Me</strong></a></li>
-          <li><a href={{ AGN.md }}><strong>Project: Changing-Look AGN</strong></a></li>
-          <li><a href={{ TERZAN5.md }}><strong>Project: Terzan 5</strong></a></li>
-          <li><a href={{ EAGLE.md }}><strong>Project: EAGLE</strong></a></li>
-        </p>
 
         {% if site.show_downloads %}
         <ul class="downloads">
