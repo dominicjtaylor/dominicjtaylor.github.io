@@ -1,6 +1,6 @@
 # About Me
 
-![Me](Cropped_image2.jpg)
+![Me](Cropped_image2.jpg){ width=60%,caption="Me" }
 
 Hi I'm Dom!
 
