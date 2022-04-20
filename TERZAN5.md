@@ -1,6 +1,6 @@
 ---
 layout: page
-title: "Terzan 5?"
+title: "Terzan 5"
 permalink: /terzan5
 ---
 
