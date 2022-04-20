@@ -5,6 +5,6 @@ Using the Evolution and Assembly of GaLaxies and their Environments (EAGLE) hydr
 
 I was able to find that:
 
-* Feedback influences the ability of galaxies to exploit high gas density in forming stars.
+* Feedback from stars and AGN influences the ability of galaxies in exploiting high gas density to form stars.
 * Low and high-mass early-assembling haloes host more efficiently formed galaxies whereas, between regimes, late-assemblers do.
 * In the EAGLE simulations, the scaling relation between regimes is sensitive to the energy-fraction function and, at high halo mass, is sensitive to the modelling of AGN feedback as it is essential in reproducing observed morphological transformations.
