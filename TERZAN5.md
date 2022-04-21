@@ -1,6 +1,8 @@
 # Terzan 5
 ![Terzan 5](terzan5.jpg "NASA/ESA Hubble Space Telescope image of Terzan 5")
 
+Click [here](https://arxiv.org/abs/2204.01753) for the arXiv preprint of this paper!
+
 ## What makes this system interesting?
 
 Terzan 5 is a complex globular cluster (GC)-like system located in the bulge of the Milky Way galaxy.  It's complex due to its spread in stellar ages and metallicities but also shows characteristics of standard GCs, such as hosting multiple stellar populations.
@@ -20,6 +22,8 @@ The results can be seen below, where the offset values for the random samples ar
 ![offsets](offset_img_gh.jpg "Offset results")
 
 You can see we were able to find that Terzan 5 and the bulge differ at statistically significant levels, and so we could conclude that Terzan 5 is not the remnant of a *major* building block of the bulge.
+
+## Contribution to the Galactic bulge
 
 We also used results from the EAGLE simulations showing the correlation between the metallicity of the α-Fe plane distribution turn-off or "knee" and stellar mass to constrain the range of masses for the progenitor of Terzan 5 and discuss the various origin scenarios.  With a progenitor mass of ~ 10<sup>8</sup>-10<sup>9</sup> Msol, we concluded that it couldn't be the remnant of an accreted satellite system.  We instead argue that a relatively small progenitor mass could have contributed the majority of its stellar mass to the bulge without significantly influencing the latter's mean chemistry.  In this scenario, the progenitor could have been a stellar clump which migrated from the disc to the inner Galaxy while losing most of its mass, or a rejuvenated GC due to accretion from molecular clouds.
 
