@@ -25,6 +25,10 @@ You can see we were able to find that Terzan 5 and the bulge differ at statistic
 
 ## Contribution to the Galactic bulge
 
-We also used results from the EAGLE simulations showing the correlation between the metallicity of the α-Fe plane distribution turn-off or "knee" and stellar mass to constrain the range of masses for the progenitor of Terzan 5 and discuss the various origin scenarios.  With a progenitor mass of ~ 10<sup>8</sup>-10<sup>9</sup> Msol, we concluded that it couldn't be the remnant of an accreted satellite system.  We instead argue that a relatively small progenitor mass could have contributed the majority of its stellar mass to the bulge without significantly influencing the latter's mean chemistry.  In this scenario, the progenitor could have been a stellar clump which migrated from the disc to the inner Galaxy while losing most of its mass, or a rejuvenated GC due to accretion from molecular clouds.
+We also used results from the EAGLE simulations showing the correlation between the metallicity of the α-Fe plane distribution turn-off or "knee" and stellar mass to constrain the range of masses for the progenitor of Terzan 5 and discuss the various origin scenarios.  You can see the correlation below, where the grey shading indicates the range of stellar masses for the Terzan 5 progenitor based on an estimate of its knee metallicity.
+
+![EAGLE](mstar_knee.png)
+
+With a progenitor mass of ~ 10<sup>8</sup>-10<sup>9</sup> Msol, we concluded that it couldn't be the remnant of an accreted satellite system.  We instead argue that a relatively small progenitor mass could have contributed the majority of its stellar mass to the bulge without significantly influencing the latter's mean chemistry.  In this scenario, the progenitor could have been a stellar clump which migrated from the disc to the inner Galaxy while losing most of its mass, or a rejuvenated GC due to accretion from molecular clouds.
 
 [back](./)
