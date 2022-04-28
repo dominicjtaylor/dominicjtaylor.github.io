@@ -11,7 +11,9 @@ Here is the SMHM relation from the 100 cMpc side EAGLE simulation.  Along the x-
 
 ## Dependence on Feedback
 
-Prior investigations had showed that stellar and AGN feedback directly influence formation efficiency.  Their effects can be seen in the plot below of the 50 cMpc side EAGLE simulation with variations in strength of feedback.  Top-left is the unaltered reference model with an AGN feedback temperature of 8500K, top-right is that but with a decreased AGN temperature to 8000K, middle-left is increased to 9000K, middle-right is with no AGN feedback, and bottom-left is with no stellar feedback.  We can see that stellar feedback reduces formation efficiency at low halo mass and AGN feedback reduces it at high halo mass.
+Prior investigations had showed that stellar and AGN feedback directly influence formation efficiency.  Their effects can be seen in the plot below of the 50 cMpc side EAGLE simulation with variations in strength of feedback.
+
+Top-left is the unaltered reference model with AGN feedback temperature of 8500K, top-right is with decreased AGN temperature to 8000K, middle-left is increased to 9000K, middle-right is with no AGN feedback, and bottom-left is with no stellar feedback.  We can see that stellar feedback reduces formation efficiency at low halo mass and AGN feedback reduces it at high halo mass.
 
 ![Feedback](L50_Variations.png)
 
@@ -35,7 +37,7 @@ The following plots include the statistical Spearman Rank correlation coefficien
 
 ![Stellar Age](StellarAge.png)
 
-### Energy fraction
+### Energy Fraction
 
 * In the EAGLE simulations, the scaling relation between regimes is sensitive to the energy-fraction function and, at high halo mass, is sensitive to the modelling of AGN feedback as it is essential in reproducing observed morphological transformations.
 
