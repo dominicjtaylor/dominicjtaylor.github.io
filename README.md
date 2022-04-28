@@ -1,7 +1,6 @@
 # Home Page
 
-## Projects
-Here are summaries of my projects to date. You can click their titles for more information!
+**Here are summaries of my projects to date. You can click their titles for more information!**
 
 ### [Changing-Look AGN](AGN.md)
 Changing-Look AGN (CLAGN) are active galactic nuclei that appear to transition between types.
