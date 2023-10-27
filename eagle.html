@@ -1,0 +1,362 @@
+<!DOCTYPE HTML>
+<!--
+	Helios by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Dom Taylor - Galaxy Formation in Cosmological Simulations</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="left-sidebar is-preload">
+		<div id="page-wrapper">
+
+			<!-- Header -->
+				<div id="header">
+
+					<!-- Inner -->
+						<div class="inner">
+							<header>
+								<h1><a href="index.html" id="logo">Galaxy Formation in Cosmological Simulations</a></h1>
+							</header>
+						</div>
+
+					<!-- Nav -->
+						<nav id="nav">
+							<ul>
+								<li><a href="index.html">Home</a></li>
+								<li>
+									<a href="index.html#banner">Projects</a>
+									<ul>
+										<li><a href="eagle.html">Galaxy Formation in Cosmological Simulations</a></li>
+										<li><a href="terzan5.html">Milky Way Stellar Populations</a></li>
+										<li><a href="testing_co_models.html">Star Formation at High-z</a></li>
+										<li><a href="agn.html">Changing-Look AGN</a></li>
+										<!-- <li> -->
+										<!-- 	<a href="#">And a submenu &hellip;</a> -->
+										<!-- 	<ul> -->
+										<!-- 		<li><a href="#">Lorem ipsum dolor</a></li> -->
+										<!-- 		<li><a href="#">Phasellus consequat</a></li> -->
+										<!-- 		<li><a href="#">Magna phasellus</a></li> -->
+										<!-- 		<li><a href="#">Etiam dolore nisl</a></li> -->
+										<!-- 	</ul> -->
+										<!-- </li> -->
+									</ul>
+								</li>
+								<li><a href="outreach.html">Outreach</a></li>
+								<li><a href="observing.html">Observing Trips</a></li>
+								<li><a href="cv/CV.pdf" download>Download CV</a></li>
+							</ul>
+						</nav>
+
+				</div>
+
+			<!-- Main -->
+				<div class="wrapper style1">
+
+					<div class="container">
+						<div class="row gtr-200">
+							<div class="col-4 col-12-mobile" id="sidebar">
+								<hr class="first" />
+								<section>
+									<header>
+										<h3><a href="master_thesis/Final_Thesis.pdf" download>Master's Thesis</a></h3>
+									</header>
+									<p>
+											
+									</p>
+									<footer>
+										<a href="master_thesis/Final_Thesis.pdf" class="button" download>Download</a>
+									</footer>
+								</section>
+								<hr />
+								<section>
+									<header>
+										<h3><a href="https://eagle.strw.leidenuniv.nl">EAGLE Cosmological Simulations</a></h3>
+									</header>
+									<p>
+										Here are some useful links about the EAGLE simulations.
+									</p>
+									<div class="row gtr-50">
+										<div class="col-4">
+											<a href="https://eagle.strw.leidenuniv.nl/index.php/eagle-technical-description/" class="image fit"><img src="images/eagle.png" alt="" /></a>
+										</div>
+										<div class="col-8">
+											<h4>Publications</h4>
+											<p>
+												Publications relating to the EAGLE simulations.
+											</p>
+										</div>
+										<div class="col-4">
+											<a href="https://eagle.strw.leidenuniv.nl/index.php/eagle-visualisation/" class="image fit"><img src="images/eaglezoom.jpg" alt="" /></a>
+										</div>
+										<div class="col-8">
+											<h4>Data Visualisation</h4>
+											<p>
+												Images and videos of the simulations.
+											</p>
+										</div>
+									</div>
+								</section>
+							</div>
+							<div class="col-8 col-12-mobile imp-mobile" id="content">
+								<article id="main">
+									<header>
+										<h2><a href="#">Galaxy Formation Efficiency</a></h2>
+										<p>
+											What are the physical processes that influence the efficiency of galaxy formation?
+										</p>
+									</header>
+									<a href="#" class="image featured"><img src="images/eagle.png" alt="" /></a>
+									<p>
+										In the cosmological context, galaxies grow via hierarchical merging from the accretion of lower mass systems. The image above shows a snapshot from the EAGLE simulations, cosmological hydrodynamical simulations that aim to provide tests of the real observable universe, by incorporating many of the complex physical processes that occur inside galaxies. Here, we see the filaments in red that connect clusters of galaxies and transport matter between them, while stellar winds, supernova explosions (together, stellar feedback), and intense activity from supermassive black holes (AGN feedback) at the centres of galaxies are shown in white.
+									</p>
+									<section>
+										<header>
+											<h3>Stellar Mass - Halo Mass relation</h3>
+										</header>
+										<p>
+											The stellar mass - halo mass relation (SMHM) tells us that more massive haloes of dark matter host more massive galaxies, but this relation exhibits significant scatter i.e. other physical processes must be causing some galaxies to be less massive at some fixed value of halo mass.
+										</p>	
+										<p>
+											Below is the SMHM relation from the 100 cMpc side EAGLE simulation. Along the x-axis is the total halo mass (M200) and along the y-axis is the fraction of stellar mass out of the total halo mass (Mstar/M200). We see that at low and high halo masses, galaxies are not so efficient in forming stars, whereas between these two regimes there is a sweet spot where it is possible for galaxies to form the most efficiently.
+										</p>
+										<a href="#" class="image featured"><img src="images/L100_SMHM.png" alt="" /></a>
+									</section>
+									<section>
+										<header>
+											<h3>The effect of Feedback</h3>
+										</header>
+										<p>
+											Investigations in the past had shown that stellar and AGN feedback directly influence formation efficiency. Their effects can be seen in the plot below of the 50 cMpc side EAGLE simulation with variations in strength of feedback.
+										</p>
+										<p>
+											Top-left is the unaltered reference model with AGN feedback temperature of 8500K, top-right is with decreased AGN temperature to 8000K, middle-left is increased to 9000K, middle-right is with no AGN feedback, and bottom-left is with no stellar feedback. We can see that stellar feedback reduces formation efficiency at low halo mass and AGN feedback reduces it at high halo mass.
+										</p>
+										<a href="#" class="image featured"><img src="images/L50_variations.png" alt="" /></a>
+									</section>
+									<section>
+										<header>
+											<h3>Second Order Influences</h3>
+										</header>
+										<p>
+											Using the EAGLE simulations, I investigated the second order influences on the efficiency of galaxy formation by exploring what physical processes correlate with stellar mass at fixed halo mass.
+										</p>	
+										<p>
+											Processes such as the birth density, metallicity, stellar age, gas density, energy fraction and gas fraction were studied to explore their correlations with formation efficiency at fixed halo mass because they trace changes in morphology and determine the mechanisms by which galaxies evolve.
+										</p>
+
+									<section>
+										<header>
+											<h4>Birth Density</h4>
+										</header>
+										<p>
+										Feedback from stars and AGN influences the ability of galaxies in exploiting high gas density to form stars.
+										</p>
+										<a href="#" class="image featured"><img src="images/BirthDensity.png" alt="" /></a>
+									</section>
+									<section>
+										<header>
+											<h4>Energy Fraction</h4>
+										</header>
+										<p>
+										In the EAGLE simulations, the scaling relation between regimes is sensitive to the energy-fraction function and, at high halo mass, is sensitive to the modelling of AGN feedback as it is essential in reproducing observed morphological transformations.
+										</p>
+										<a href="#" class="image featured"><img src="images/EnergyFraction.png" alt="" /></a>
+									</section>
+								</article>
+							</div>
+						</div>
+						<hr />
+						<div class="row">
+							<article class="col-4 col-12-mobile special">
+								<a href="#" class="image featured"><img src="images/pic07.jpg" alt="" /></a>
+								<header>
+									<h3><a href="#">Gravida aliquam penatibus</a></h3>
+								</header>
+								<p>
+									Amet nullam fringilla nibh nulla convallis tique ante proin sociis accumsan lobortis. Auctor etiam
+									porttitor phasellus tempus cubilia ultrices tempor sagittis. Nisl fermentum consequat integer interdum.
+								</p>
+							</article>
+							<article class="col-4 col-12-mobile special">
+								<a href="#" class="image featured"><img src="images/pic08.jpg" alt="" /></a>
+								<header>
+									<h3><a href="#">Sed quis rhoncus placerat</a></h3>
+								</header>
+								<p>
+									Amet nullam fringilla nibh nulla convallis tique ante proin sociis accumsan lobortis. Auctor etiam
+									porttitor phasellus tempus cubilia ultrices tempor sagittis. Nisl fermentum consequat integer interdum.
+								</p>
+							</article>
+							<article class="col-4 col-12-mobile special">
+								<a href="#" class="image featured"><img src="images/pic09.jpg" alt="" /></a>
+								<header>
+									<h3><a href="#">Magna laoreet et aliquam</a></h3>
+								</header>
+								<p>
+									Amet nullam fringilla nibh nulla convallis tique ante proin sociis accumsan lobortis. Auctor etiam
+									porttitor phasellus tempus cubilia ultrices tempor sagittis. Nisl fermentum consequat integer interdum.
+								</p>
+							</article>
+						</div>
+					</div>
+
+				</div>
+
+			<!-- Footer -->
+				<div id="footer">
+					<div class="container">
+						<div class="row">
+
+							<!-- Tweets -->
+								<section class="col-4 col-12-mobile">
+									<header>
+										<h2 class="icon brands fa-twitter circled"><span class="label">Tweets</span></h2>
+									</header>
+									<ul class="divided">
+										<li>
+											<article class="tweet">
+												Amet nullam fringilla nibh nulla convallis tique ante sociis accumsan.
+												<span class="timestamp">5 minutes ago</span>
+											</article>
+										</li>
+										<li>
+											<article class="tweet">
+												Hendrerit rutrum quisque.
+												<span class="timestamp">30 minutes ago</span>
+											</article>
+										</li>
+										<li>
+											<article class="tweet">
+												Curabitur donec nulla massa laoreet nibh. Lorem praesent montes.
+												<span class="timestamp">3 hours ago</span>
+											</article>
+										</li>
+										<li>
+											<article class="tweet">
+												Lacus natoque cras rhoncus curae dignissim ultricies. Convallis orci aliquet.
+												<span class="timestamp">5 hours ago</span>
+											</article>
+										</li>
+									</ul>
+								</section>
+
+							<!-- Posts -->
+								<section class="col-4 col-12-mobile">
+									<header>
+										<h2 class="icon solid fa-file circled"><span class="label">Posts</span></h2>
+									</header>
+									<ul class="divided">
+										<li>
+											<article class="post stub">
+												<header>
+													<h3><a href="#">Nisl fermentum integer</a></h3>
+												</header>
+												<span class="timestamp">3 hours ago</span>
+											</article>
+										</li>
+										<li>
+											<article class="post stub">
+												<header>
+													<h3><a href="#">Phasellus portitor lorem</a></h3>
+												</header>
+												<span class="timestamp">6 hours ago</span>
+											</article>
+										</li>
+										<li>
+											<article class="post stub">
+												<header>
+													<h3><a href="#">Magna tempus consequat</a></h3>
+												</header>
+												<span class="timestamp">Yesterday</span>
+											</article>
+										</li>
+										<li>
+											<article class="post stub">
+												<header>
+													<h3><a href="#">Feugiat lorem ipsum</a></h3>
+												</header>
+												<span class="timestamp">2 days ago</span>
+											</article>
+										</li>
+									</ul>
+								</section>
+
+							<!-- Photos -->
+								<section class="col-4 col-12-mobile">
+									<header>
+										<h2 class="icon solid fa-camera circled"><span class="label">Photos</span></h2>
+									</header>
+									<div class="row gtr-25">
+										<div class="col-6">
+											<a href="#" class="image fit"><img src="images/pic10.jpg" alt="" /></a>
+										</div>
+										<div class="col-6">
+											<a href="#" class="image fit"><img src="images/pic11.jpg" alt="" /></a>
+										</div>
+										<div class="col-6">
+											<a href="#" class="image fit"><img src="images/pic12.jpg" alt="" /></a>
+										</div>
+										<div class="col-6">
+											<a href="#" class="image fit"><img src="images/pic13.jpg" alt="" /></a>
+										</div>
+										<div class="col-6">
+											<a href="#" class="image fit"><img src="images/pic14.jpg" alt="" /></a>
+										</div>
+										<div class="col-6">
+											<a href="#" class="image fit"><img src="images/pic15.jpg" alt="" /></a>
+										</div>
+									</div>
+								</section>
+
+						</div>
+						<hr />
+						<div class="row">
+							<div class="col-12">
+
+								<!-- Contact -->
+									<section class="contact">
+										<header>
+											<h3>Fine Me Online!</h3>
+										</header>
+										<p>Follow me on Twitter and connect with me on LinkedIn to see some behind-the-scenes of my research and academic experiences. Check out my GitHub too, for code that I make public!
+										</p>
+										<ul class="icons">
+											<li><a href="https://twitter.com/astrodomjt" class="ico    n brands fa-twitter"><span class="label">Twitter</span></a></li>
+											<li><a href="https://www.linkedin.com/in/dominic-taylor    -004a8b196/" class="icon brands fa-linkedin-in"><span class="label">Linkedin</span></a></li>
+											<li><a href="https://github.com/dominicjtaylor" class="    fa-brands"><span class="label">GitHub</span></a></li>
+										</ul>
+									</section>
+
+								<!-- Copyright -->
+									<div class="copyright">
+										<ul class="menu">
+											<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+										</ul>
+									</div>
+
+							</div>
+
+						</div>
+					</div>
+				</div>
+
+		</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.dropotron.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
