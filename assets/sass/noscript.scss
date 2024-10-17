@@ -6,25 +6,28 @@
 @import 'libs/html-grid';
 
 /*
-	Helios by HTML5 UP
+	Landed by HTML5 UP
 	html5up.net | @ajlkn
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 */
 
-/* Carousel */
+/* Loader */
 
-	.carousel {
-		overflow-x: auto;
-	}
+	body.landing {
 
-/* Header */
-
-	body.homepage {
 		&.is-preload {
-			#header {
-				&:after {
-					opacity: 0;
+
+			// Spinner (active)
+
+				&:before {
+					display: none;
 				}
-			}
+
+			// Overlay (active)
+
+				&:after {
+					display: none;
+				}
+
 		}
 	}

@@ -1,5 +1,5 @@
 /*
-	Helios by HTML5 UP
+	Landed by HTML5 UP
 	html5up.net | @ajlkn
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 */
@@ -7,25 +7,15 @@
 (function($) {
 
 	var	$window = $(window),
-		$body = $('body'),
-		settings = {
-
-			// Carousels
-				carousels: {
-					speed: 4,
-					fadeIn: true,
-					fadeDelay: 250
-				},
-
-		};
+		$body = $('body');
 
 	// Breakpoints.
 		breakpoints({
-			wide:      [ '1281px',  '1680px' ],
-			normal:    [ '961px',   '1280px' ],
-			narrow:    [ '841px',   '960px'  ],
-			narrower:  [ '737px',   '840px'  ],
-			mobile:    [ null,      '736px'  ]
+			xlarge:   [ '1281px',  '1680px' ],
+			large:    [ '981px',   '1280px' ],
+			medium:   [ '737px',   '980px'  ],
+			small:    [ '481px',   '736px'  ],
+			xsmall:   [ null,      '480px'  ]
 		});
 
 	// Play initial animations on page load.
@@ -35,23 +25,28 @@
 			}, 100);
 		});
 
-	// Dropdowns.
-		$('#nav > ul').dropotron({
-			mode: 'fade',
-			speed: 350,
-			noOpenerFade: true,
-			alignment: 'center'
+	// Touch mode.
+		if (browser.mobile)
+			$body.addClass('is-touch');
+
+	// Scrolly links.
+		$('.scrolly').scrolly({
+			speed: 2000
 		});
 
-	// Scrolly.
-		$('.scrolly').scrolly();
+	// Dropdowns.
+		$('#nav > ul').dropotron({
+			alignment: 'right',
+			hideDelay: 350
+		});
 
 	// Nav.
 
-		// Button.
+		// Title Bar.
 			$(
-				'<div id="navButton">' +
+				'<div id="titleBar">' +
 					'<a href="#navPanel" class="toggle"></a>' +
+					'<span class="title">' + $('#logo').html() + '</span>' +
 				'</div>'
 			)
 				.appendTo($body);
@@ -71,147 +66,185 @@
 					hideOnSwipe: true,
 					resetScroll: true,
 					resetForms: true,
+					side: 'left',
 					target: $body,
 					visibleClass: 'navPanel-visible'
 				});
 
-	// Carousels.
-		$('.carousel').each(function() {
+	// Parallax.
+	// Disabled on IE (choppy scrolling) and mobile platforms (poor performance).
+		if (browser.name == 'ie'
+		||	browser.mobile) {
 
-			var	$t = $(this),
-				$forward = $('<span class="forward"></span>'),
-				$backward = $('<span class="backward"></span>'),
-				$reel = $t.children('.reel'),
-				$items = $reel.children('article');
+			$.fn._parallax = function() {
 
-			var	pos = 0,
-				leftLimit,
-				rightLimit,
-				itemWidth,
-				reelWidth,
-				timerId;
+				return $(this);
 
-			// Items.
-				if (settings.carousels.fadeIn) {
+			};
 
-					$items.addClass('loading');
+		}
+		else {
 
-					$t.scrollex({
-						mode: 'middle',
-						top: '-20vh',
-						bottom: '-20vh',
-						enter: function() {
+			$.fn._parallax = function() {
 
-							var	timerId,
-								limit = $items.length - Math.ceil($window.width() / itemWidth);
+				$(this).each(function() {
 
-							timerId = window.setInterval(function() {
-								var x = $items.filter('.loading'), xf = x.first();
+					var $this = $(this),
+						on, off;
 
-								if (x.length <= limit) {
+					on = function() {
 
-									window.clearInterval(timerId);
-									$items.removeClass('loading');
-									return;
+						$this
+							.css('background-position', 'center 0px');
 
-								}
+						$window
+							.on('scroll._parallax', function() {
 
-								xf.removeClass('loading');
+								var pos = parseInt($window.scrollTop()) - parseInt($this.position().top);
 
-							}, settings.carousels.fadeDelay);
+								$this.css('background-position', 'center ' + (pos * -0.15) + 'px');
 
-						}
-					});
+							});
 
-				}
+					};
 
-			// Main.
-				$t._update = function() {
-					pos = 0;
-					rightLimit = (-1 * reelWidth) + $window.width();
-					leftLimit = 0;
-					$t._updatePos();
-				};
+					off = function() {
 
-				$t._updatePos = function() { $reel.css('transform', 'translate(' + pos + 'px, 0)'); };
+						$this
+							.css('background-position', '');
 
-			// Forward.
-				$forward
-					.appendTo($t)
-					.hide()
-					.mouseenter(function(e) {
-						timerId = window.setInterval(function() {
-							pos -= settings.carousels.speed;
+						$window
+							.off('scroll._parallax');
 
-							if (pos <= rightLimit)
-							{
-								window.clearInterval(timerId);
-								pos = rightLimit;
-							}
+					};
 
-							$t._updatePos();
-						}, 10);
-					})
-					.mouseleave(function(e) {
-						window.clearInterval(timerId);
-					});
-
-			// Backward.
-				$backward
-					.appendTo($t)
-					.hide()
-					.mouseenter(function(e) {
-						timerId = window.setInterval(function() {
-							pos += settings.carousels.speed;
-
-							if (pos >= leftLimit) {
-
-								window.clearInterval(timerId);
-								pos = leftLimit;
-
-							}
-
-							$t._updatePos();
-						}, 10);
-					})
-					.mouseleave(function(e) {
-						window.clearInterval(timerId);
-					});
-
-			// Init.
-				$window.on('load', function() {
-
-					reelWidth = $reel[0].scrollWidth;
-
-					if (browser.mobile) {
-
-						$reel
-							.css('overflow-y', 'hidden')
-							.css('overflow-x', 'scroll')
-							.scrollLeft(0);
-						$forward.hide();
-						$backward.hide();
-
-					}
-					else {
-
-						$reel
-							.css('overflow', 'visible')
-							.scrollLeft(0);
-						$forward.show();
-						$backward.show();
-
-					}
-
-					$t._update();
-
-					$window.on('resize', function() {
-						reelWidth = $reel[0].scrollWidth;
-						$t._update();
-					}).trigger('resize');
+					breakpoints.on('<=medium', off);
+					breakpoints.on('>medium', on);
 
 				});
 
-		});
+				return $(this);
+
+			};
+
+			$window
+				.on('load resize', function() {
+					$window.trigger('scroll');
+				});
+
+		}
+
+	// Spotlights.
+		var $spotlights = $('.spotlight');
+
+		$spotlights
+			._parallax()
+			.each(function() {
+
+				var $this = $(this),
+					on, off;
+
+				on = function() {
+
+					var top, bottom, mode;
+
+					// Use main <img>'s src as this spotlight's background.
+						$this.css('background-image', 'url("' + $this.find('.image.main > img').attr('src') + '")');
+
+					// Side-specific scrollex tweaks.
+						if ($this.hasClass('top')) {
+
+							mode = 'top';
+							top = '-20%';
+							bottom = 0;
+
+						}
+						else if ($this.hasClass('bottom')) {
+
+							mode = 'bottom-only';
+							top = 0;
+							bottom = '20%';
+
+						}
+						else {
+
+							mode = 'middle';
+							top = 0;
+							bottom = 0;
+
+						}
+
+					// Add scrollex.
+						$this.scrollex({
+							mode:		mode,
+							top:		top,
+							bottom:		bottom,
+							initialize:	function(t) { $this.addClass('inactive'); },
+							terminate:	function(t) { $this.removeClass('inactive'); },
+							enter:		function(t) { $this.removeClass('inactive'); },
+
+							// Uncomment the line below to "rewind" when this spotlight scrolls out of view.
+
+							//leave:	function(t) { $this.addClass('inactive'); },
+
+						});
+
+				};
+
+				off = function() {
+
+					// Clear spotlight's background.
+						$this.css('background-image', '');
+
+					// Remove scrollex.
+						$this.unscrollex();
+
+				};
+
+				breakpoints.on('<=medium', off);
+				breakpoints.on('>medium', on);
+
+			});
+
+	// Wrappers.
+		var $wrappers = $('.wrapper');
+
+		$wrappers
+			.each(function() {
+
+				var $this = $(this),
+					on, off;
+
+				on = function() {
+
+					$this.scrollex({
+						top:		250,
+						bottom:		0,
+						initialize:	function(t) { $this.addClass('inactive'); },
+						terminate:	function(t) { $this.removeClass('inactive'); },
+						enter:		function(t) { $this.removeClass('inactive'); },
+
+						// Uncomment the line below to "rewind" when this wrapper scrolls out of view.
+
+						//leave:	function(t) { $this.addClass('inactive'); },
+
+					});
+
+				};
+
+				off = function() {
+					$this.unscrollex();
+				};
+
+				breakpoints.on('<=medium', off);
+				breakpoints.on('>medium', on);
+
+			});
+
+	// Banner.
+		var $banner = $('#banner');
+
+		$banner
+			._parallax();
 
 })(jQuery);
