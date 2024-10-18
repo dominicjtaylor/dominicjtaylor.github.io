@@ -637,9 +637,11 @@ input, select, textarea {
 /* Container */
 
 	.container {
-		margin: 0 auto;
 		max-width: calc(100% - 4em);
-		width: 70em;
+		/* width: 70em; */
+		width: 100%;
+		margin: 0 auto;
+		justify-content: center;
 	}
 
 		.container.xsmall {
@@ -753,7 +755,7 @@ input, select, textarea {
 		}
 
 		.row > .col-4 {
-			width: 33.33333%;
+			width: 30%;
 		}
 
 		.row > .off-4 {
@@ -886,6 +888,11 @@ input, select, textarea {
 
 			.row.gtr-uniform {
 				margin-top: -2.5em;
+				display: flex;
+				justify-content: center;
+				flex-wrap: wrap;
+				margin: 0;
+				padding: 0;
 			}
 
 				.row.gtr-uniform > * {
@@ -2412,6 +2419,8 @@ input, select, textarea {
 			border: 0;
 			border-radius: 0;
 			padding: 0;
+			width: 100%;
+			margin: 0 auto;
 		}
 
 		.box.alt section {
@@ -2939,7 +2948,7 @@ input, select, textarea {
 			input[type="reset"].primary:hover,
 			input[type="button"].primary:hover,
 			.button.primary:hover {
-				background-color: #e76278;
+				background-color: #e76282;
 			}
 
 			input[type="submit"].primary:active,
