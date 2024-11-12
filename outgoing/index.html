@@ -41,7 +41,6 @@
 				<div class="container">
 					<header class="major">
 						<h2>Downloads</h2>
-						<p>Files available to download</p>
 					</header>
 
 					<section>
@@ -53,7 +52,7 @@
 										<th>Size</th>
 									</tr>
 								</thead>
-								<tbody id="file-list">Loading files...</tbody>
+								<tbody id="file-list"></tbody>
 							</table>
 						</div>
 					</section>
@@ -77,13 +76,14 @@
 						}
 
 						async function fetchFiles() {
+							const fileList = document.getElementById('file-list');
+							fileList.innerHTML = ''; // Clear the "Loading..." text
+
 							try {
 								const response = await fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/contents/${outgoingDir}`);
 								if (!response.ok) throw new Error('Failed to fetch files');
 
 								const files = await response.json();
-								const fileList = document.getElementById('file-list');
-								fileList.innerHTML = ''; // Clear the "Loading..." text
 
 						    
 								if (files.length === 0) {
