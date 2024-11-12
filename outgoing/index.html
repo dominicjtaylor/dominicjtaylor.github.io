@@ -11,22 +11,54 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-		<style>
-			/* Custom styling to left-align file list and add a line separator */
-			#file-list {
-			    list-style: none;
-			    padding: 0;
-			    text-align: left;
-			    margin-top: 1em;
-			}
-			#file-list div {
-			    margin: 5px 0;
-			}
-			.separator {
-			    border-bottom: 1px solid #ccc;
-			    margin-top: 10px;
-			}
-		</style>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+		<link rel="icon" href="../images/favicon.ico" type="image/x-icon">
+		<!-- <style> -->
+		<!-- 	#main .major h2 { -->
+		<!-- 		border-bottom: 2px solid #000; -->
+		<!-- 		padding-bottom: 10px; -->
+		<!-- 		margin-bottom: 20px; -->
+		<!-- 	} -->
+		<!-- 	#file-list { -->
+		<!-- 		list-style-type: none; -->
+		<!-- 		padding-left: 0; -->
+		<!-- 		margin-left: 0; -->
+		<!-- 	} -->
+		<!-- 	#file-list div { -->
+		<!-- 	    	margin: 10px 0; -->
+		<!-- 	} -->
+		<!-- 	#file-list a { -->
+		<!-- 		text-decoration: none; -->
+		<!-- 		color: #007bff; -->
+		<!-- 	} -->
+		<!-- 	#file-list a:hover { -->
+		<!-- 		text-decoration: underline; -->
+		<!-- 	} -->
+		<!-- 	.table-wrapper { -->
+		<!-- 		width: 100%; -->
+		<!-- 		overflow-x: auto; -->
+		<!-- 		margin-top: 20px; -->
+		<!-- 	} -->
+
+		<!-- 	table { -->
+		<!-- 		width: 100%; -->
+		<!-- 		border-collapse: collapse; -->
+		<!-- 	} -->
+
+		<!-- 	th, td { -->
+		<!-- 		padding: 8px 12px; -->
+		<!-- 		text-align: left; -->
+		<!-- 		border-bottom: 1px solid #ddd; -->
+		<!-- 	} -->
+
+		<!-- 	th { -->
+		<!-- 		background-color: #f2f2f2; -->
+		<!-- 	} -->
+
+		<!-- 	tr:hover { -->
+		<!-- 		background-color: #f5f5f5; -->
+		<!-- 	} -->
+		<!-- </style> -->
 	</head>
 	<body class="is-preload">
 		<div id="page-wrapper">
@@ -45,7 +77,7 @@
 								<li><a href="../terzan5_tmp.html">Milky Way Globular Clusters</a></li>
 							</ul>
 						</li>
-						<li><a href="../cv/CV.pdf" download>CV</a></li>
+						<li><a href="../cv/CV.pdf" class="icon solid fa-download" download>CV</a></li>
 						<li><a href="mailto:dominic.j.taylor@durham.ac.uk" class="button primary">Contact</a></li>
 					</ul>
 				</nav>
@@ -54,49 +86,81 @@
 			<div id="main" class="wrapper style1">
 				<div class="container">
 					<header class="major">
-						<h2>Available Downloads</h2>
+						<h2>Downloads</h2>
+						<p>Files available to download</p>
 					</header>
 
-					<section id="content">
-						<ul id="file-list">Loading files...</ul>
-						<script>
-							const repoOwner = 'dominicjtaylor'; // Replace with your GitHub username
-							const repoName = 'dominicjtaylor.github.io'; // Replace with your GitHub repository name
-							const outgoingDir = 'outgoing';
-
-							async function fetchFiles() {
-								try {
-									const response = await fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/contents/${outgoingDir}`);
-									if (!response.ok) throw new Error('Failed to fetch files');
-
-									const files = await response.json();
-									const fileList = document.getElementById('file-list');
-									fileList.innerHTML = ''; // Clear the "Loading..." text
-
-							    
-									files.forEach(file => {
-										if (file.type === 'file' && file.name != 'index.html') {
-											const fileContainer = document.createElement('div');
-											const link = document.createElement('a');
-											link.href = `https://${repoOwner}.github.io/${repoName}/${outgoingDir}/${file.name}`;
-											link.textContent = file.name;
-
-											const details = document.createElement('span');
-											details.textContent = ` | Size: $(file.size} bytes`;
-											fileContainer.appendChild(link);
-											fileContainer.appendChild(details);
-											fileList.appendChild(fileContainer);
-										}
-									});
-
-								} catch (error) {
-									document.getElementById('file-list').textContent = 'Error loading files.';
-									console.error('Error fetching files:', error);
-								}
-							}
-							fetchFiles();
-						</script>
+					<!-- <section id="content"> -->
+					<!-- 	<ul id="file-list">Loading files...</ul> -->
+					<!-- </section> -->
+					
+					<section>
+						<h3>Files</h3>
+						<div class="table-wrapper">
+							<table>
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Size</th>
+									</tr>
+								</thead>
+								<tbody id="file-list">Loading files...</tbody>
+							</table>
+						</div>
 					</section>
+
+					<script>
+						const repoOwner = 'dominicjtaylor'; // Replace with your GitHub username
+						const repoName = 'dominicjtaylor.github.io'; // Replace with your GitHub repository name
+						const outgoingDir = 'outgoing';
+
+						function formatSize(sizeInBytes) {
+							if (sizeInBytes >= 1073741824) {
+								// If size is in GB
+								return (sizeInBytes / 1073741824).toFixed(2) + " NG";  // NG for GB
+							} else if (sizeInBytes >= 1048576) {
+								// If size is in MB
+								return (sizeInBytes / 1048576).toFixed(2) + " NM";  // NM for MB
+							} else {
+								// If size is in KB or smaller
+								return (sizeInBytes / 1024).toFixed(2) + " KB";
+							}
+						}
+
+						async function fetchFiles() {
+							try {
+								const response = await fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/contents/${outgoingDir}`);
+								if (!response.ok) throw new Error('Failed to fetch files');
+
+								const files = await response.json();
+								const fileList = document.getElementById('file-list');
+								fileList.innerHTML = ''; // Clear the "Loading..." text
+
+						    
+								files.forEach(file => {
+									if (file.type === 'file' && file.name != 'index.html') {
+										const row = document.createElement('tr');
+										const nameCell = document.createElement('td');
+										const link = document.createElement('a');
+										link.href = `https://${repoOwner}.github.io/${repoName}/${outgoingDir}/${file.name}`;
+										link.textContent = file.name;
+										nameCell.appendChild(link);
+										row.appendChild(nameCell);
+
+										const sizeCell = document.createElement('td');
+										sizeCell.textContent = formatSize(file.size);
+										row.appendChild(sizeCell);
+										fileList.appendChild(row);
+									}
+								});
+
+							} catch (error) {
+								document.getElementById('file-list').textContent = 'Error loading files.';
+								console.error('Error fetching files:', error);
+							}
+						}
+						fetchFiles();
+					</script>
 				</div>
 			</div>
 		</div>
