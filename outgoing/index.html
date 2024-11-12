@@ -6,7 +6,7 @@
 -->
 <html>
 	<head>
-		<title>No Sidebar - Landed by HTML5 UP</title>
+		<title>Dom Taylor - Downloads</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
@@ -14,42 +14,73 @@
 	</head>
 	<body class="is-preload">
 		<div id="page-wrapper">
-			<div class="container">
-				<header class="major">
-					<h2>Available Downloads</h2>
-					<ul id="file-list">Loading files...</ul>
-				</header>
-
-				<section id="content">
-					<script>
-					    const repoOwner = 'dominicjtaylor'; // Replace with your GitHub username
-					    const repoName = 'dominicjtaylor.github.io'; // Replace with your GitHub repository name
-					    const outgoingDir = 'outgoing';
-					    async function fetchFiles() {
-						try {
-						    const response = await fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/contents/${outgoingDir}`);
-						    const files = await response.json();
-						    const fileList = document.getElementById('file-list');
-						    fileList.innerHTML = ''; // Clear the "Loading..." text
-						    files.forEach(file => {
-							if (file.type === 'file') {
-							    const listItem = document.createElement('li');
-							    const link = document.createElement('a');
-							    link.href = `https://${repoOwner}.github.io/${repoName}/${outgoingDir}/${file.name}`;
-							    link.textContent = file.name;
-							    listItem.appendChild(link);
-							    fileList.appendChild(listItem);
-							}
-						    });
-						} catch (error) {
-						    document.getElementById('file-list').textContent = 'Error loading files.';
-						    console.error('Error fetching files:', error);
-						}
-					    }
-					    fetchFiles();
-					</script>
-				</section>
 			<div id="main" class="wrapper style1">
+				<div class="container">
+					<header class="major">
+						<h2>Available Downloads</h2>
+						<ul id="file-list">Loading files...</ul>
+					</header>
+
+					<section id="content">
+						<script>
+							const repoOwner = 'dominicjtaylor'; // Replace with your GitHub username
+							const repoName = 'dominicjtaylor.github.io'; // Replace with your GitHub repository name
+							const outgoingDir = 'outgoing';
+
+							async function fetchFiles() {
+								try {
+									const response = await fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/contents/${outgoingDir}`);
+									const files = await response.json();
+									const fileList = document.getElementById('file-list');
+									fileList.innerHTML = ''; // Clear the "Loading..." text
+
+							    
+									<!-- files.forEach(file => { -->
+											<!-- if (file.type === 'file' && file.name != 'index.html') { -->
+													<!-- const listItem = document.createElement('li'); -->
+													<!-- const link = document.createElement('a'); -->
+													<!-- link.href = `https://${repoOwner}.github.io/${repoName}/${outgoingDir}/${file.name}`; -->
+													<!-- link.textContent = file.name; -->
+													<!-- listItem.appendChild(link); -->
+													<!-- fileList.appendChild(listItem); -->
+													<!-- } -->
+											<!-- }); -->
+
+									for (const file of files) {
+										if (file.type == 'file' && file.name != 'index.html') {
+											const fileContainer = document.createElement('div');
+
+											const link = document.createElement('a');
+											link.href = `https://${repoOwner}.github.io/${repoName}/${outgoingDir}/${file.name}`;
+										    
+											link.textContent = file.name;
+
+											// Fetch last modified date
+											const fileDetails = await fetch(file.git_url);
+											const fileData = await fileDetails.json();
+											const lastModifiedDate = new Date(fileData.commit.commit.author.date).toLocaleDateString();
+
+										    
+											// Display file size and last modification date
+											const details = document.createElement('span');
+											details.textContent = ` | Size: ${file.size} bytes | Last modified: ${lastModifiedDate}`;
+
+											fileContainer.appendChild(link);
+											fileContainer.appendChild(details);
+											fileList.appendChild(fileContainer);
+										}
+									}
+								
+								} catch (error) {
+									document.getElementById('file-list').textContent = 'Error loading files.';
+									console.error('Error fetching files:', error);
+								}
+							}
+							fetchFiles();
+						</script>
+					</section>
+				</div>
+			</div>
 		</div>
 
 		<!-- Scripts -->
