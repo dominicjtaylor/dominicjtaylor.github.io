@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<!--
+	Landed by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>No Sidebar - Landed by HTML5 UP</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+		<div id="page-wrapper">
+			<div class="container">
+				<header class="major">
+					<h2>Available Downloads</h2>
+					<ul id="file-list">Loading files...</ul>
+				</header>
+
+				<section id="content">
+					<script>
+					    const repoOwner = 'dominicjtaylor'; // Replace with your GitHub username
+					    const repoName = 'dominicjtaylor.github.io'; // Replace with your GitHub repository name
+					    const outgoingDir = 'outgoing';
+					    async function fetchFiles() {
+						try {
+						    const response = await fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/contents/${outgoingDir}`);
+						    const files = await response.json();
+						    const fileList = document.getElementById('file-list');
+						    fileList.innerHTML = ''; // Clear the "Loading..." text
+						    files.forEach(file => {
+							if (file.type === 'file') {
+							    const listItem = document.createElement('li');
+							    const link = document.createElement('a');
+							    link.href = `https://${repoOwner}.github.io/${repoName}/${outgoingDir}/${file.name}`;
+							    link.textContent = file.name;
+							    listItem.appendChild(link);
+							    fileList.appendChild(listItem);
+							}
+						    });
+						} catch (error) {
+						    document.getElementById('file-list').textContent = 'Error loading files.';
+						    console.error('Error fetching files:', error);
+						}
+					    }
+					    fetchFiles();
+					</script>
+				</section>
+			<div id="main" class="wrapper style1">
+		</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/jquery.dropotron.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
