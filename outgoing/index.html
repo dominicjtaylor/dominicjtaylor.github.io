@@ -11,6 +11,22 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<style>
+			/* Custom styling to left-align file list and add a line separator */
+			#file-list {
+			    list-style: none;
+			    padding: 0;
+			    text-align: left;
+			    margin-top: 1em;
+			}
+			#file-list div {
+			    margin: 5px 0;
+			}
+			.separator {
+			    border-bottom: 1px solid #ccc;
+			    margin-top: 10px;
+			}
+		</style>
 	</head>
 	<body class="is-preload">
 		<div id="page-wrapper">
@@ -39,10 +55,10 @@
 				<div class="container">
 					<header class="major">
 						<h2>Available Downloads</h2>
-						<ul id="file-list">Loading files...</ul>
 					</header>
 
 					<section id="content">
+						<ul id="file-list">Loading files...</ul>
 						<script>
 							const repoOwner = 'dominicjtaylor'; // Replace with your GitHub username
 							const repoName = 'dominicjtaylor.github.io'; // Replace with your GitHub repository name
@@ -73,31 +89,6 @@
 										}
 									});
 
-									<!-- for (const file of files) { -->
-									<!-- 	if (file.type == 'file' && file.name != 'index.html') { -->
-									<!-- 		const fileContainer = document.createElement('div'); -->
-
-									<!-- 		const link = document.createElement('a'); -->
-									<!-- 		link.href = `https://${repoOwner}.github.io/${repoName}/${outgoingDir}/${file.name}`; -->
-										    
-									<!-- 		link.textContent = file.name; -->
-
-									<!-- 		// Fetch last modified date -->
-									<!-- 		const fileDetails = await fetch(file.git_url); -->
-									<!-- 		const fileData = await fileDetails.json(); -->
-									<!-- 		const lastModifiedDate = new Date(fileData.commit.commit.author.date).toLocaleDateString(); -->
-
-										    
-									<!-- 		// Display file size and last modification date -->
-									<!-- 		const details = document.createElement('span'); -->
-									<!-- 		details.textContent = ` | Size: ${file.size} bytes | Last modified: ${lastModifiedDate}`; -->
-
-									<!-- 		fileContainer.appendChild(link); -->
-									<!-- 		fileContainer.appendChild(details); -->
-									<!-- 		fileList.appendChild(fileContainer); -->
-									<!-- 	} -->
-									<!-- } -->
-								
 								} catch (error) {
 									document.getElementById('file-list').textContent = 'Error loading files.';
 									console.error('Error fetching files:', error);
