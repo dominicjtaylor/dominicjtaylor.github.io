@@ -13,52 +13,6 @@
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 		<link rel="icon" href="../images/favicon.ico" type="image/x-icon">
-		<!-- <style> -->
-		<!-- 	#main .major h2 { -->
-		<!-- 		border-bottom: 2px solid #000; -->
-		<!-- 		padding-bottom: 10px; -->
-		<!-- 		margin-bottom: 20px; -->
-		<!-- 	} -->
-		<!-- 	#file-list { -->
-		<!-- 		list-style-type: none; -->
-		<!-- 		padding-left: 0; -->
-		<!-- 		margin-left: 0; -->
-		<!-- 	} -->
-		<!-- 	#file-list div { -->
-		<!-- 	    	margin: 10px 0; -->
-		<!-- 	} -->
-		<!-- 	#file-list a { -->
-		<!-- 		text-decoration: none; -->
-		<!-- 		color: #007bff; -->
-		<!-- 	} -->
-		<!-- 	#file-list a:hover { -->
-		<!-- 		text-decoration: underline; -->
-		<!-- 	} -->
-		<!-- 	.table-wrapper { -->
-		<!-- 		width: 100%; -->
-		<!-- 		overflow-x: auto; -->
-		<!-- 		margin-top: 20px; -->
-		<!-- 	} -->
-
-		<!-- 	table { -->
-		<!-- 		width: 100%; -->
-		<!-- 		border-collapse: collapse; -->
-		<!-- 	} -->
-
-		<!-- 	th, td { -->
-		<!-- 		padding: 8px 12px; -->
-		<!-- 		text-align: left; -->
-		<!-- 		border-bottom: 1px solid #ddd; -->
-		<!-- 	} -->
-
-		<!-- 	th { -->
-		<!-- 		background-color: #f2f2f2; -->
-		<!-- 	} -->
-
-		<!-- 	tr:hover { -->
-		<!-- 		background-color: #f5f5f5; -->
-		<!-- 	} -->
-		<!-- </style> -->
 	</head>
 	<body class="is-preload">
 		<div id="page-wrapper">
@@ -90,12 +44,7 @@
 						<p>Files available to download</p>
 					</header>
 
-					<!-- <section id="content"> -->
-					<!-- 	<ul id="file-list">Loading files...</ul> -->
-					<!-- </section> -->
-					
 					<section>
-						<h3>Files</h3>
 						<div class="table-wrapper">
 							<table>
 								<thead>
@@ -137,25 +86,41 @@
 								fileList.innerHTML = ''; // Clear the "Loading..." text
 
 						    
-								files.forEach(file => {
-									if (file.type === 'file' && file.name != 'index.html') {
-										const row = document.createElement('tr');
-										const nameCell = document.createElement('td');
-										const link = document.createElement('a');
-										link.href = `https://${repoOwner}.github.io/${repoName}/${outgoingDir}/${file.name}`;
-										link.textContent = file.name;
-										nameCell.appendChild(link);
-										row.appendChild(nameCell);
+								if (files.length === 0) {
+								    const row = document.createElement('tr');
+								    const noFilesMessage = document.createElement('td');
+								    noFilesMessage.colSpan = 2;
+								    noFilesMessage.textContent = 'No files available.';
+								    row.appendChild(noFilesMessage);
+								    fileList.appendChild(row);
+								} else {
+									files.forEach(file => {
+										if (file.type === 'file' && file.name != 'index.html') {
+											const row = document.createElement('tr');
+											const nameCell = document.createElement('td');
+											const link = document.createElement('a');
+											link.href = `https://${repoOwner}.github.io/${repoName}/${outgoingDir}/${file.name}`;
+											link.textContent = file.name;
+											nameCell.appendChild(link);
+											row.appendChild(nameCell);
 
-										const sizeCell = document.createElement('td');
-										sizeCell.textContent = formatSize(file.size);
-										row.appendChild(sizeCell);
-										fileList.appendChild(row);
-									}
-								});
+											const sizeCell = document.createElement('td');
+											sizeCell.textContent = formatSize(file.size);
+											row.appendChild(sizeCell);
+											fileList.appendChild(row);
+										}
+									});
+								}
 
 							} catch (error) {
-								document.getElementById('file-list').textContent = 'Error loading files.';
+								const fileList = document.getElementById('file-list');
+								fileList.innerHTML = ''; // Clear previous content
+								const row = document.createElement('tr');
+								const errorMessage = document.createElement('td');
+								errorMessage.colSpan = 2;
+								errorMessage.textContent = 'Error loading files.';
+								row.appendChild(errorMessage);
+								fileList.appendChild(row);
 								console.error('Error fetching files:', error);
 							}
 						}
