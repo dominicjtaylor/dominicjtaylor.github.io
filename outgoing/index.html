@@ -128,23 +128,22 @@
 							}
 						}
 
-						function checkForDirectFileRequest() {
-							const currentPath = window.location.pathname;
-							const fileName = currentPath.split("/").pop(); // Extract file name from the URL
+						<!-- function checkForDirectFileRequest() { -->
+						<!-- 	const currentPath = window.location.pathname; -->
+						<!-- 	const fileName = currentPath.split("/").pop(); // Extract file name from the URL -->
 							
-							// If the file is requested directly, automatically trigger the download
-							if (fileName && fileName !== 'index.html') {
-							  const fileUrl = `https://${window.location.host}${currentPath}`;
-							  window.location.href = fileUrl; // Redirect to the file URL to start the download
-							}
-						}
+						<!-- 	// If the file is requested directly, automatically trigger the download -->
+						<!-- 	if (fileName && fileName !== 'index.html') { -->
+						<!-- 	  const fileUrl = `https://${window.location.host}${currentPath}`; -->
+						<!-- 	  window.location.href = fileUrl; // Redirect to the file URL to start the download -->
+						<!-- 	} -->
+						<!-- } -->
 
-
-						checkForDirectFileRequest();
-						<!-- fetchFiles(); -->
-						if (window.location.pathname === '/outgoing/index.html') {
-							fetchFiles();
-						}
+						<!-- checkForDirectFileRequest(); -->
+						fetchFiles();
+						<!-- if (window.location.pathname === '/outgoing/index.html') { -->
+						<!-- 	fetchFiles(); -->
+						<!-- } -->
 					</script>
 				</div>
 			</div>
