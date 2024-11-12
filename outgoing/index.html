@@ -99,8 +99,11 @@
 											const row = document.createElement('tr');
 											const nameCell = document.createElement('td');
 											const link = document.createElement('a');
-											link.href = `https://${repoOwner}.github.io/${repoName}/${outgoingDir}/${file.name}`;
+											<!-- link.href = `https://${repoOwner}.github.io/${repoName}/${outgoingDir}/${file.name}`; -->
+											link.href = `https://${window.location.host}/outgoing/${file.name}`;
 											link.textContent = file.name;
+											link.setAttribute('download', file.name);
+
 											nameCell.appendChild(link);
 											row.appendChild(nameCell);
 
