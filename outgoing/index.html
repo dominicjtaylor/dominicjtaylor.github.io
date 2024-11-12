@@ -14,6 +14,27 @@
 	</head>
 	<body class="is-preload">
 		<div id="page-wrapper">
+
+			<header id="header">
+				<h1 id="logo"><a href="../index.html">Dom Taylor</a></h1>
+				<nav id="nav">
+					<ul>
+						<li><a href="../index.html">Home</a></li>
+						<li>
+							<a href="#">Research</a>
+							<ul>
+								<li><a href="../kaoss_tmp.html">Dusty Star-Forming Galaxies</a></li>
+								<li><a href="../CO_SLEDs_tmp.html">ISM at Cosmic Noon</a></li>
+								<li><a href="../agn_tmp.html">Active Galactic Nuclei</a></li>
+								<li><a href="../terzan5_tmp.html">Milky Way Globular Clusters</a></li>
+							</ul>
+						</li>
+						<li><a href="../cv/CV.pdf" download>CV</a></li>
+						<li><a href="mailto:dominic.j.taylor@durham.ac.uk" class="button primary">Contact</a></li>
+					</ul>
+				</nav>
+			</header>
+
 			<div id="main" class="wrapper style1">
 				<div class="container">
 					<header class="major">
@@ -45,7 +66,7 @@
 											link.textContent = file.name;
 
 											const details = document.createElement('span');
-											details.textContent = ' | Size: $(file.size} bytes';
+											details.textContent = ` | Size: $(file.size} bytes`;
 											fileContainer.appendChild(link);
 											fileContainer.appendChild(details);
 											fileList.appendChild(fileContainer);
