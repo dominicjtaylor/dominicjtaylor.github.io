@@ -3699,6 +3699,15 @@ input, select, textarea {
 		z-index: 100;
 	}
 
+	#header .icon {
+		line-height: 1;
+		vertical-align: middle;
+	}
+
+	#header .icon.fa-github {
+		font-size: 2em; /* Adjust the size as needed */
+	}
+
 		#header h1 {
 			height: inherit;
 			left: 1.25em;
