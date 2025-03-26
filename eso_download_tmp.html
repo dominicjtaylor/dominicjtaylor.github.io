@@ -17,7 +17,7 @@
 
 			<!-- Header -->
 				<header id="header">
-					<h1 id="logo"><a href="index.html">Dom Taylor</a></h1>
+					<h1 id="logo"><a href="index.html">Dominic Taylor</a></h1>
 					<nav id="nav">
 						<ul>
 							<li><a href="index.html">Home</a></li>
@@ -31,6 +31,14 @@
 								</ul>
 							</li>
 							<li>
+								<a href="#">Codes</a>
+								<ul>
+									<li><a href="eso_download_tmp.html">ESO Science Archive Data Download</a></li>
+									<li><a href="kmos_specfit_tmp.html">Spectral Fitting</a></li>
+									<li>
+								</ul>
+							</li>
+							<li>
 								<a href="#">Quick Links</a>
 								<ul>
 									<li><a href="https://ui.adsabs.harvard.edu">NASA/ADS</a></li>
@@ -39,6 +47,7 @@
 							</li>
 							<!-- <li><a href="outreach_tmp.html">Outreach</a></li> -->
 							<li><a href="cv/CV.pdf" class="icon solid fa-download" download>CV</a></li>
+							<li><a href="https://github.com/dominicjtaylor" class="icon solid brands fa-github" title="GitHub"></a></li>
 							<li><a href="mailto:dominic.j.taylor@durham.ac.uk" class="button primary">Contact</a></li>
 						</ul>
 					</nav>
@@ -54,15 +63,28 @@
 							</p>
 						</header>
 							<section>
+								<h3>Description</h3>
+								<p>
+								This script enables the user to download science and calibration files from the ESO science archive, in a fully automated process. Various forms of search criteria can be provided to identify the correct data, such as: <b>Program ID</b>, <b>OBID</b>, <b>observation filter</b>, <b>data category</b> (default is SCIENCE), and the <b>number of files</b> to select (in order of MJD_OBS). Then, if desirable, the associated files (such as calibration files) can be retrieved. Typically, the raw associated files are desired, but the user can instead ask to download the processed or log files. As an added option, the data can be organised into a directory tree inside the current directory.
+								</p>
 								<h3>Installation</h3>
 								<p>
 								To start using <b>eso_download</b>, clone the repository by executing the following on the command line:
 								<br>
 								<br>
 								<code>git clone https://github.com/dominicjtaylor/eso_download.git</code>
-								</br>
 								</p>
-
+								<!-- </br> -->
+								<h3>Usage</h3>
+								<p>
+								<!-- <span class="image left"><img src="images/eso_download_help.png" alt="" /></span> -->
+								<!-- <div class="col-12"><span class="image fit"><img src="images/eso_download_help.png" alt="" /></span></div> -->
+								After executing the script, the following appears:
+								<br>
+								<br>
+								<img src="images/eso_download_help.png" class="custom-image">
+								</p>
+							</section>
 					</div>
 					
 				</div>

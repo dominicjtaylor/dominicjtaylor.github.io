@@ -2605,6 +2605,14 @@ input, select, textarea {
 			/* 	width: 100%; */
 			/* } */
 
+		.custom-image {
+			width: 50%; /* Adjust as needed */
+			height: auto; /* Maintain aspect ratio */
+			object-fit: contain; /* Ensures the full image is visible */
+			border-radius: 0; /* Removes oval shape if applied */
+			display: block; /* Prevents extra spacing issues */
+		}
+
 /* List */
 
 	ol {
