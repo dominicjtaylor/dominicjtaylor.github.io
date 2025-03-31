@@ -626,12 +626,20 @@ input, select, textarea {
 			z-index: 100000;
 		}
 
-	@media (-webkit-min-device-pixel-ratio: 2) {
+	/* @media (-webkit-min-device-pixel-ratio: 2) { */
 
+	/* 	body.landing:before { */
+	/* 		line-height: 2.025em; */
+	/* 	} */
+
+	/* } */
+
+	@media (max-width: 768px) {  /* Target devices smaller than tablets */
 		body.landing:before {
-			line-height: 2.025em;
+			line-height: 1.6em; /* Adjust line spacing for better readability */
+			font-size: 1rem; /* Reduce font size for better scaling */
+			padding: 10px; /* Ensure proper spacing */
 		}
-
 	}
 
 /* Container */
