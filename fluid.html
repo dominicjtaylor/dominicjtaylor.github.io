@@ -1,51 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Fluid Demo – Dom Taylor</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <head>
+    <meta charset="UTF-8" />
+    <title>Fluid Test</title>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+        background: black;
+      }
+      canvas {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: -1;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+    <script>
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(
+        75,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        1000
+      );
+      camera.position.z = 1;
 
-  <!-- Your existing CSS -->
-  <link rel="stylesheet" href="assets/css/main.css" />
-  
-  <style>
-    /* Optional overlay style if not already in your CSS */
-    body, html {
-      margin: 0;
-      padding: 0;
-      overflow-x: hidden;
-      background-color: #000;
-      font-family: sans-serif;
-      color: white;
-    }
+      const renderer = new THREE.WebGLRenderer({ alpha: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document.body.appendChild(renderer.domElement);
 
-    canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: -1;
-    }
+      const vertexShader = `
+        varying vec2 vUv;
+        void main() {
+          vUv = uv;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        }
+      `;
 
-    section.content {
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2rem;
-      text-shadow: 0 0 10px black;
-    }
-  </style>
-</head>
+      const fragmentShader = `
+        uniform float uTime;
+        varying vec2 vUv;
+        void main() {
+          gl_FragColor = vec4(vUv.x, vUv.y, 0.5 + 0.5 * sin(uTime), 1.0);
+        }
+      `;
 
-<body>
-  <section class="content">Intro section</section>
-  <section class="content">About me</section>
-  <section class="content">Projects</section>
+      const material = new THREE.ShaderMaterial({
+        vertexShader,
+        fragmentShader,
+        uniforms: {
+          uTime: { value: 0.0 }
+        }
+      });
 
-  <!-- Your JS -->
-  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
-  <script src="js/fluid-main.js"></script>
-</body>
+      const geometry = new THREE.PlaneGeometry(2, 2);
+      const mesh = new THREE.Mesh(geometry, material);
+      scene.add(mesh);
+
+      function animate(time) {
+        material.uniforms.uTime.value = time * 0.001;
+        renderer.render(scene, camera);
+        requestAnimationFrame(animate);
+      }
+      animate();
+
+      window.addEventListener("resize", () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
+    </script>
+  </body>
 </html>
