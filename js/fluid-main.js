@@ -13,12 +13,14 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setClearColor(0x000000, 0);
 document.body.appendChild(renderer.domElement);
 
-// Track mouse/touch
-const mouse = { x: 0.5, y: 0.5 };
+// Track mouse/touch with THREE.Vector2
+const mouse = new THREE.Vector2(0.5, 0.5);
+
 window.addEventListener("mousemove", (e) => {
   mouse.x = e.clientX / window.innerWidth;
   mouse.y = 1.0 - e.clientY / window.innerHeight;
 });
+
 window.addEventListener("touchmove", (e) => {
   if (e.touches.length > 0) {
     mouse.x = e.touches[0].clientX / window.innerWidth;
@@ -59,7 +61,7 @@ const material = new THREE.ShaderMaterial({
   fragmentShader,
   uniforms: {
     uTime: { value: 0.0 },
-    uMouse: { value: new THREE.Vector2(mouse.x, mouse.y) }
+    uMouse: { value: mouse }
   }
 });
 
@@ -71,10 +73,11 @@ scene.add(mesh);
 // Animation loop
 function animate(time) {
   material.uniforms.uTime.value = time * 0.001;
-  material.uniforms.uMouse.value.set(mouse.x, mouse.y);
+  // mouse is already a THREE.Vector2, update uniform automatically
   renderer.render(scene, camera);
   requestAnimationFrame(animate);
 }
+
 animate();
 
 // Resize handling
