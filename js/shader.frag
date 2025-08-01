@@ -4,6 +4,13 @@ varying vec2 vUv;
 
 void main() {
   float dist = distance(vUv, uMouse);
-  float ripple = 0.5 + 0.5 * sin(40.0 * dist - uTime * 5.0);
-  gl_FragColor = vec4(vec3(ripple), 1.0);
+  float ripple = sin(40.0 * dist - uTime * 5.0);
+
+  float intensity = 1.0 - smoothstep(0.0, 0.5, dist);
+  float brightness = ripple * intensity;
+
+  vec3 baseColor = vec3(0.2, 0.4, 0.8);  // bluish
+  vec3 color = baseColor + brightness;
+
+  gl_FragColor = vec4(color, 1.0);
 }
