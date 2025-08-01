@@ -73,7 +73,7 @@ scene.add(mesh);
 // Animation loop
 function animate(time) {
   material.uniforms.uTime.value = time * 0.001;
-  // mouse is already a THREE.Vector2, update uniform automatically
+  material.uniforms.uMouse.value.copy(mouse);  // <-- update uniform here
   renderer.render(scene, camera);
   requestAnimationFrame(animate);
 }
