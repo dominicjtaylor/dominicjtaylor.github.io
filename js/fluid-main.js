@@ -46,6 +46,33 @@ const material = new THREE.ShaderMaterial({
   }
 });
 
+const mouse = { x: 0.5, y: 0.5 };
+
+const material = new THREE.ShaderMaterial({
+  vertexShader,
+  fragmentShader,
+  uniforms: {
+    uTime: { value: 0.0 },
+    uMouse: { value: new THREE.Vector2(mouse.x, mouse.y) }
+  }
+});
+
+window.addEventListener("mousemove", (event) => {
+  mouse.x = event.clientX / window.innerWidth;
+  mouse.y = 1.0 - event.clientY / window.innerHeight; // flip Y
+  material.uniforms.uMouse.value.set(mouse.x, mouse.y);
+});
+
+// Optional for touch
+window.addEventListener("touchmove", (event) => {
+  if (event.touches.length > 0) {
+    const touch = event.touches[0];
+    mouse.x = touch.clientX / window.innerWidth;
+    mouse.y = 1.0 - touch.clientY / window.innerHeight;
+    material.uniforms.uMouse.value.set(mouse.x, mouse.y);
+  }
+});
+
 const mesh = new THREE.Mesh(geometry, material);
 scene.add(mesh);
 
