@@ -11,12 +11,13 @@ vec3 hsv2rgb(vec3 c) {
 
 void main() {
     float dist = distance(vUv, uMouse);
-    float wave = sin(vUv.x * 20.0 + uTime + dist * 10.0) * 0.1;
+    float rippleFalloff = exp(-dist * 40.0); // Sharper falloff
+    float wave = sin(vUv.x * 20.0 + uTime + dist * 40.0) * 0.1 * rippleFalloff;
 
-    // Hue cycles over time and position
+    // Hue cycles over time and space
     float hue = mod(uTime * 0.1 + vUv.x + vUv.y * 0.5 + wave, 1.0);
     float sat = 1.0;
-    float val = 1.0 - dist * 1.5;  // fade toward edges from cursor
+    float val = 1.0 - dist * 2.5; // Sharper dropoff in brightness
 
     vec3 color = hsv2rgb(vec3(hue, sat, val));
     gl_FragColor = vec4(color, 1.0);
