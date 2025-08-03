@@ -2,24 +2,22 @@ uniform float uTime;
 uniform vec2 uMouse;
 varying vec2 vUv;
 
-// Inferno colormap approximation function
-vec3 inferno_colormap(float t) {
-  t = clamp(t, 0.0, 1.0);
-
-  float r = 0.000218 * pow(t, 5.0) - 0.0019 * pow(t, 4.0) + 0.0353 * pow(t, 3.0) - 0.144 * pow(t, 2.0) + 0.537 * t + 0.270;
-  float g = 0.00206 * pow(t, 5.0) - 0.025 * pow(t, 4.0) + 0.155 * pow(t, 3.0) - 0.372 * pow(t, 2.0) + 0.742 * t + 0.022;
-  float b = 0.0131 * pow(t, 5.0) - 0.106 * pow(t, 4.0) + 0.328 * pow(t, 3.0) - 0.483 * pow(t, 2.0) + 0.519 * t + 0.103;
-
-  return vec3(r, g, b);
+// Function to convert HSV to RGB
+vec3 hsv2rgb(vec3 c) {
+    vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
+    vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
+    return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
 }
 
 void main() {
-  float dist = distance(vUv, uMouse);
-  float wave = sin(vUv.x * 30.0 + uTime + dist * 15.0) * 0.15;
+    float dist = distance(vUv, uMouse);
+    float wave = sin(vUv.x * 20.0 + uTime + dist * 10.0) * 0.1;
 
-  float t = fract(vUv.y + wave + uTime * 0.05);
+    // Hue cycles over time and position
+    float hue = mod(uTime * 0.1 + vUv.x + vUv.y * 0.5 + wave, 1.0);
+    float sat = 1.0;
+    float val = 1.0 - dist * 1.5;  // fade toward edges from cursor
 
-  vec3 color = inferno_colormap(t);
-
-  gl_FragColor = vec4(color, 1.0);
+    vec3 color = hsv2rgb(vec3(hue, sat, val));
+    gl_FragColor = vec4(color, 1.0);
 }
