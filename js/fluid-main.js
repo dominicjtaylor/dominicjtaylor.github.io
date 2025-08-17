@@ -70,10 +70,17 @@ const geometry = new THREE.PlaneGeometry(2, 2);
 const mesh = new THREE.Mesh(geometry, material);
 scene.add(mesh);
 
-// Animation loop
+// // Animation loop
+// function animate(time) {
+//   material.uniforms.uTime.value = time * 0.001;
+//   material.uniforms.uMouse.value.copy(mouse);  // <-- update uniform here
+//   renderer.render(scene, camera);
+//   requestAnimationFrame(animate);
+// }
+
 function animate(time) {
   material.uniforms.uTime.value = time * 0.001;
-  material.uniforms.uMouse.value.copy(mouse);  // <-- update uniform here
+  material.uniforms.uMouse.value.set(mouse.x, mouse.y); // critical!
   renderer.render(scene, camera);
   requestAnimationFrame(animate);
 }
