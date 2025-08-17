@@ -1,0 +1,331 @@
+<html lang="en">
+<head>
+	<title>Mountain Test</title>
+<style>
+body {
+	margin:0;
+	background-color:black;
+	overflow:hidden;
+	color:white;
+}
+</style>
+</head>
+<body>
+  <h1>Test HTML</h1>
+  <p>If you see this, HTML works!</p>
+</body>
+<script type="module" src="js/mountain.js"></script>
+<!-- 	<head> -->
+<!-- 		<title>Dominic Taylor</title> -->
+<!-- 		<meta charset="utf-8" /> -->
+<!-- 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" /> -->
+<!-- 		<link rel="stylesheet" href="assets/css/main.css" /> -->
+<!-- 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"> -->
+<!-- 		<!-1- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> -1-> -->
+<!-- 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript> -->
+<!-- 		<link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png"> -->
+<!-- 		<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png"> -->
+<!-- 		<link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png"> -->
+<!-- 		<link rel="manifest" href="images/site.webmanifest"> -->
+<!-- 		<link rel="icon" href="images/favicon.ico" type="image/x-icon"> -->
+<!-- 	</head> -->
+<!-- 	<body class="is-preload landing"> -->
+<!-- 		<div id="page-wrapper"> -->
+
+<!-- 			<!-1- Header -1-> -->
+<!-- 				<header id="header"> -->
+<!-- 					<h1 id="logo"><a href=#">Dominic Taylor</a></h1> -->
+<!-- 					<nav id="nav"> -->
+<!-- 						<ul> -->
+<!-- 							<li><a href="index.html">Home</a></li> -->
+<!-- 							<li><a href="about_tmp.html">About</a></li> -->
+<!-- 							<li> -->
+<!-- 								<a href="#">Research</a> -->
+<!-- 								<ul> -->
+<!-- 									<li><a href="https://orcid.org/0000-0002-0031-630X">My Papers (ORCID)</a></li> -->
+<!-- 									<li><a href="kaoss_tmp.html">Galaxy Evolution</a></li> -->
+<!-- 									<li><a href="ISM_tmp.html">Interstellar Medium</a></li> -->
+<!-- 									<li><a href="agn_tmp.html">Active Galactic Nuclei</a></li> -->
+<!-- 									<li><a href="terzan5_tmp.html">Stellar Populations</a></li> -->
+<!-- 									<li><a href="analysis_tmp.html">Analysis Techniques</a></li> -->
+<!-- 								</ul> -->
+<!-- 							</li> -->
+<!-- 							<li> -->
+<!-- 								<a href="#">Codes</a> -->
+<!-- 								<ul> -->
+<!-- 									<li><a href="eso_download.html">ESO Science Archive Data Download</a></li> -->
+<!-- 								</ul> -->
+<!-- 							</li> -->
+<!-- 							<li> -->
+<!-- 								<a href="#">Quick Links</a> -->
+<!-- 								<ul> -->
+<!-- 									<li><a href="https://ui.adsabs.harvard.edu">NASA/ADS</a></li> -->
+<!-- 									<li><a href="https://archive.eso.org/eso/eso_archive_main.html">ESO Science Archive</a></li> -->
+<!-- 									<li><a href="https://arxiv.org/archive/astro-ph">arXiv</a></li> -->
+<!-- 								</ul> -->
+<!-- 							</li> -->
+<!-- 							<!-1- <li><a href="cv/CV.pdf" class="icon solid fa-download" download>CV</a></li> -1-> -->
+<!-- 							<li><a href="cv/CV.pdf" download class="icon solid fa-download">CV</a></li> -->
+<!-- 							<li><a href="https://github.com/dominicjtaylor" class="icon solid brands fa-github" title="GitHub"></a></li> -->
+<!-- 							<li><a href="mailto:dominic.j.taylor@durham.ac.uk" class="button primary">Contact</a></li> -->
+<!-- 						</ul> -->
+<!-- 					</nav> -->
+<!-- 				</header> -->
+
+<!-- 			<!-1- Banner -1-> -->
+<!-- 				<!-1- <section id="banner"> -1-> -->
+<!-- 				<!-1- 	<div class="content"> -1-> -->
+<!-- 				<!-1- 		<header> -1-> -->
+<!-- 				<!-1- 			<h2>Hi, I'm Dom!</h2> -1-> -->
+<!-- 				<!-1- 			<p> -1-> -->
+<!-- 				<!-1- 			Ph.D. Researcher in Astronomy at Durham University, UK, -1-> --> 
+<!-- 				<!-1- 			<br /> -1-> -->
+<!-- 				<!-1- 			applying statistical modeling and quantitative analytics -1-> -->
+<!-- 				<!-1- 			<br /> -1-> -->
+<!-- 				<!-1- 			to molecular and ionised gas dynamics in high-redshift galaxies. -1-> -->
+<!-- 				<!-1- 			<br /> -1-> -->
+<!-- 				<!-1- 			<br /> -1-> -->
+<!-- 				<!-1- 			Focused on developing efficient, maintainable code for -1-> -->
+<!-- 				<!-1- 			<br /> -1-> -->
+<!-- 				<!-1- 			large-scale data processing, leveraging Bayesian statistics, -1-> -->
+<!-- 				<!-1- 			<br /> -1-> -->
+<!-- 				<!-1- 			machine learning, and data visualisation to extract -1-> -->
+<!-- 				<!-1- 			<br /> -1-> -->
+<!-- 				<!-1- 			insights from complex datasets. -1-> -->
+<!-- 				<!-1- 			<br /> -1-> -->
+<!-- 				<!-1- 			<br /> -1-> -->
+<!-- 				<!-1- 			Find out more about my research below! -1-> -->
+<!-- 				<!-1- 			</p> -1-> -->
+<!-- 				<!-1- 		</header> -1-> -->
+<!-- 				<!-1- 		<span class="image"><img src="images/me5.jpg" alt="" /></span> -1-> -->
+<!-- 				<!-1- 	</div> -1-> -->
+<!-- 				<!-1- 	<a href="#one" class="goto-next-circle scrolly"></a> -1-> -->
+<!-- 				<!-1- </section> -1-> -->
+
+<!-- 			<!-1- <!-2- One -2-> -1-> -->
+<!-- 				<!-1- <section id="one" class="spotlight bottom"> -1-> -->
+<!-- 				<!-1- 	<span class="image fit main"><img src="images/kinmaps2.png" alt="" /></span> -1-> -->
+<!-- 				<!-1- 	<a href="#header" class="goto-previous-circle scrolly"></a> -1-> -->
+<!-- 				<!-1- 	<div class="content"> -1-> -->
+<!-- 				<!-1- 		<div class="container"> -1-> -->
+<!-- 				<!-1- 			<div class="row"> -1-> -->
+<!-- 				<!-1- 				<div class="col-4 col-12-medium"> -1-> -->
+<!-- 				<!-1- 					<header> -1-> -->
+<!-- 				<!-1- 						<h2><a href="kaoss_tmp.html">KAOSS survey</a> -1-> -->
+<!-- 				<!-1- 						</h2> -1-> -->
+<!-- 				<!-1- 						<p> -1-> -->
+<!-- 				<!-1- 						(KMOS+ALMA Observations of Submillimetre Sources) -1-> -->
+<!-- 				<!-1- 						</p> -1-> -->
+<!-- 				<!-1- 						<!-2- <ul class="actions"> -2-> -1-> -->
+<!-- 				<!-1- 						<!-2- 	<li><a href="#" class="button">Learn More</a></li> -2-> -1-> -->
+<!-- 				<!-1- 						<!-2- </ul> -2-> -1-> -->
+<!-- 				<!-1- 					</header> -1-> -->
+<!-- 				<!-1- 				</div> -1-> -->
+<!-- 				<!-1- 				<div class="col-4 col-12-medium"> -1-> -->
+<!-- 				<!-1- 					<p> -1-> -->
+<!-- 				<!-1- 					An investigation into the dynamics of submillimetre galaxies (SMGs) &mdash; -1-> -->
+<!-- 				<!-1- 					dusty, star-forming galaxies at cosmic noon (10 billion years ago!) &mdash; -1-> -->
+<!-- 				<!-1- 					to provide insight into their evolutionary connection to other galaxy populations. -1-> -->
+<!-- 				<!-1- 					<br><br> -1-> -->
+<!-- 				<!-1- 					</p> -1-> -->
+<!-- 				<!-1- 				</div> -1-> -->
+<!-- 				<!-1- 				<div class="col-4 col-12-medium"> -1-> -->
+<!-- 				<!-1- 					<p> -1-> -->
+<!-- 				<!-1- 					Observations from the KMOS IFU on the VLT in Chile have enabled us to measure -1-> -->
+<!-- 				<!-1- 					redshifts for a statistically significant sample of ALMA-identified submillimetre -1-> -->
+<!-- 				<!-1- 					galaxies. We will be able to determine clustering strengths, halo masses, and -1-> -->
+<!-- 				<!-1- 					starburst lifetimes. -1-> -->
+<!-- 				<!-1- 					</p> -1-> -->
+<!-- 				<!-1- 				</div> -1-> -->
+<!-- 				<!-1- 			</div> -1-> -->
+<!-- 				<!-1- 		</div> -1-> -->
+<!-- 				<!-1- 	</div> -1-> -->
+<!-- 				<!-1- 	<a href="#two" class="goto-next scrolly"></a> -1-> -->
+<!-- 				<!-1- </section> -1-> -->
+
+<!-- 			<!-1- <!-2- Two -2-> -1-> -->
+<!-- 				<!-1- <section id="two" class="spotlight right"> -1-> -->
+<!-- 				<!-1- 	<span class="image fit main"><img src="images/COmaps.png" alt="" /></span> -1-> -->
+<!-- 				<!-1- 	<a href="#one" class="goto-previous-circle scrolly"></a> -1-> -->
+<!-- 				<!-1- 	<div class="content"> -1-> -->
+<!-- 				<!-1- 		<header> -1-> -->
+<!-- 				<!-1- 			<h2><a href="ISM_tmp.html">ISM at Cosmic Noon</a></h2> -1-> -->
+<!-- 				<!-1- 			<p> -1-> -->
+<!-- 				<!-1- 			An investigation into the shape of the CO spectral line energy distributions -1-> -->
+<!-- 				<!-1- 			</p> -1-> -->
+<!-- 				<!-1- 		</header> -1-> -->
+<!-- 				<!-1- 		<p>Unresolved mid-J and high-J ALMA CO observations of 12 luminous SMGs show that CO -1-> -->
+<!-- 				<!-1- 		excitation in star-forming galaxies generally correlates with the star-formation -1-> -->
+<!-- 				<!-1- 		rate surface density, but with significant scatter indicative of intrinsic ISM variations. -1-> -->
+<!-- 				<!-1- 		These variations could arise due to heating by cosmic rays or turbulence. -1-> -->
+<!-- 				<!-1- 		</p> -1-> -->
+<!-- 				<!-1- 		<!-2- <ul class="actions"> -2-> -1-> -->
+<!-- 				<!-1- 		<!-2- 	<li><a href="#" class="button">Learn More</a></li> -2-> -1-> -->
+<!-- 				<!-1- 		<!-2- </ul> -2-> -1-> -->
+<!-- 				<!-1- 	</div> -1-> -->
+<!-- 				<!-1- 	<a href="#three" class="goto-next-circle scrolly"></a> -1-> -->
+<!-- 				<!-1- </section> -1-> -->
+
+<!-- 			<!-1- <!-2- Three -2-> -1-> -->
+<!-- 				<!-1- <section id="three" class="spotlight style3 left"> -1-> -->
+<!-- 				<!-1- 	<span class="image fit main bottom"><img src="images/source_positions.png" alt="" /></span> -1-> -->
+<!-- 				<!-1- 	<a href="#two" class="goto-previous-circle scrolly"></a> -1-> -->
+<!-- 				<!-1- 	<div class="content"> -1-> -->
+<!-- 				<!-1- 		<header> -1-> -->
+<!-- 				<!-1- 			<h2><a href="agn_tmp.html">Changing-Look AGN</a></h2> -1-> -->
+<!-- 				<!-1- 			<p> -1-> -->
+<!-- 				<!-1- 			Searching for X-ray selected, optically varying AGN using XMM-Newton and SDSS -1-> -->
+<!-- 				<!-1- 			</p> -1-> -->
+<!-- 				<!-1- 		</header> -1-> -->
+<!-- 				<!-1- 		<p> -1-> -->
+<!-- 				<!-1- 		Active Galactic Nuclei (AGN) exhibit variations in their X-ray and optical properties in addition to those caused by geometry. -1-> -->
+<!-- 				<!-1- 		Using decades-worth of stacked images from XMM-Newton and spectroscopy from the Sloan Digital Sky Survey (SDSS), we can -1-> -->
+<!-- 				<!-1- 		find new changing-look AGN (CLAGN). -1-> -->
+<!-- 				<!-1- 		</p> -1-> -->
+<!-- 				<!-1- 		<!-2- <ul class="actions"> -2-> -1-> -->
+<!-- 				<!-1- 		<!-2- 	<li><a href="#" class="button">Learn More</a></li> -2-> -1-> -->
+<!-- 				<!-1- 		<!-2- </ul> -2-> -1-> -->
+<!-- 				<!-1- 	</div> -1-> -->
+<!-- 				<!-1- 	<a href="#four" class="goto-next-circle scrolly"></a> -1-> -->
+<!-- 				<!-1- </section> -1-> -->
+
+<!-- 			<!-1- <!-2- Four -2-> -1-> -->
+<!-- 				<!-1- <section id="four" class="wrapper special fade-up"> -1-> -->
+<!-- 				<!-1- 	<a href="#three" class="goto-previous scrolly"></a> -1-> -->
+<!-- 				<!-1- 	<div class="container"> -1-> -->
+<!-- 				<!-1- 		<header class="major"> -1-> -->
+<!-- 				<!-1- 			<h2>What does an Astrophysicist do?</h2> -1-> -->
+<!-- 				<!-1- 			<p> -1-> -->
+<!-- 				<!-1- 			Here are three steps that summarise how we take Astrophysical data and use it to learn about the Universe! -1-> -->
+<!-- 				<!-1- 			</p> -1-> -->
+<!-- 				<!-1- 		</header> -1-> -->
+<!-- 				<!-1- 		<div class="box alt"> -1-> -->
+<!-- 				<!-1- 			<div class="row gtr-uniform"> -1-> -->
+<!-- 				<!-1- 				<section class="col-4 col-6-medium col-12-xsmall"> -1-> -->
+<!-- 				<!-1- 					<span class="icon solid major fa-satellite-dish"></span> -1-> -->
+<!-- 				<!-1- 					<h3>Data Collection</h3> -1-> -->
+<!-- 				<!-1- 					<p> -1-> -->
+<!-- 				<!-1- 					We collect observational data using ground or space-based telescopes -1-> -->
+<!-- 				<!-1- 					<!-2- such as the Atacama Large Millimetre/Submillimetre -2-> -1-> -->
+<!-- 				<!-1- 					<!-2- Array and the James Webb Space Telescope. -2-> -1-> -->
+<!-- 				<!-1- 					</p> -1-> -->
+<!-- 				<!-1- 				</section> -1-> -->
+<!-- 				<!-1- 				<section class="col-4 col-6-medium col-12-xsmall"> -1-> -->
+<!-- 				<!-1- 					<span class="icon solid major fa-chart-line"></span> -1-> -->
+<!-- 				<!-1- 					<h3>Data Analysis</h3> -1-> -->
+<!-- 				<!-1- 					<p> -1-> -->
+<!-- 				<!-1- 					We apply fits to spectroscopic observations to measure gas dynamics and infer formation mechanisms -1-> -->
+<!-- 				<!-1- 					</p> -1-> -->
+<!-- 				<!-1- 				</section> -1-> -->
+<!-- 				<!-1- 				<section class="col-4 col-6-medium col-12-xsmall"> -1-> -->
+<!-- 				<!-1- 					<span class="icon solid major fa-users"></span> -1-> -->
+<!-- 				<!-1- 					<h3>Community-sharing</h3> -1-> -->
+<!-- 				<!-1- 					<p> -1-> -->
+<!-- 				<!-1- 					We distil the information for publications to help build a better picture of how galaxies form and evolve -1-> -->
+<!-- 				<!-1- 					</p> -1-> -->
+<!-- 				<!-1- 				</section> -1-> -->
+<!-- 				<!-1- 				<!-2- <section class="col-4 col-6-medium col-12-xsmall"> -2-> -1-> -->
+<!-- 				<!-1- 				<!-2- 	<span class="icon solid alt major fa-paper-plane"></span> -2-> -1-> -->
+<!-- 				<!-1- 				<!-2- 	<h3>Non semper interdum</h3> -2-> -1-> -->
+<!-- 				<!-1- 				<!-2- 	<p>Feugiat accumsan lorem eu ac lorem amet accumsan donec. Blandit orci porttitor.</p> -2-> -1-> -->
+<!-- 				<!-1- 				<!-2- </section> -2-> -1-> -->
+<!-- 				<!-1- 				<!-2- <section class="col-4 col-6-medium col-12-xsmall"> -2-> -1-> -->
+<!-- 				<!-1- 				<!-2- 	<span class="icon solid alt major fa-file"></span> -2-> -1-> -->
+<!-- 				<!-1- 				<!-2- 	<h3>Odio laoreet accumsan</h3> -2-> -1-> -->
+<!-- 				<!-1- 				<!-2- 	<p>Feugiat accumsan lorem eu ac lorem amet accumsan donec. Blandit orci porttitor.</p> -2-> -1-> -->
+<!-- 				<!-1- 				<!-2- </section> -2-> -1-> -->
+<!-- 				<!-1- 				<!-2- <section class="col-4 col-6-medium col-12-xsmall"> -2-> -1-> -->
+<!-- 				<!-1- 				<!-2- 	<span class="icon solid alt major fa-lock"></span> -2-> -1-> -->
+<!-- 				<!-1- 				<!-2- 	<h3>Massa arcu accumsan</h3> -2-> -1-> -->
+<!-- 				<!-1- 				<!-2- 	<p>Feugiat accumsan lorem eu ac lorem amet accumsan donec. Blandit orci porttitor.</p> -2-> -1-> -->
+<!-- 				<!-1- 				<!-2- </section> -2-> -1-> -->
+<!-- 				<!-1- 			</div> -1-> -->
+<!-- 				<!-1- 		</div> -1-> -->
+<!-- 				<!-1- 		<footer class="major"> -1-> -->
+<!-- 				<!-1- 			<ul class="actions special"> -1-> -->
+<!-- 				<!-1- 				<li><a href="analysis_tmp.html" class="button">Analysis Techniques</a></li> -1-> -->
+<!-- 				<!-1- 			</ul> -1-> -->
+<!-- 				<!-1- 		</footer> -1-> -->
+<!-- 				<!-1- 	</div> -1-> -->
+<!-- 				<!-1- </section> -1-> -->
+
+<!-- 			<!-1- <!-2- Five -2-> -1-> -->
+<!-- 				<!-1- <!-2- <section id="five" class="wrapper style2 special fade"> -2-> -1-> -->
+<!-- 				<!-1- <!-2- 	<div class="container"> -2-> -1-> -->
+<!-- 				<!-1- <!-2- 		<header> -2-> -1-> -->
+<!-- 				<!-1- <!-2- 			<h2></h2> -2-> -1-> -->
+<!-- 				<!-1- <!-2- 			<p>Ante metus praesent faucibus ante integer id accumsan eleifend</p> -2-> -1-> -->
+<!-- 				<!-1- <!-2- 		</header> -2-> -1-> -->
+<!-- 				<!-1- <!-2- 		<form method="post" action="#" class="cta"> -2-> -1-> -->
+<!-- 				<!-1- <!-2- 			<div class="row gtr-uniform gtr-50"> -2-> -1-> -->
+<!-- 				<!-1- <!-2- 				<div class="col-8 col-12-xsmall"><input type="email" name="email" id="email" placeholder="Your Email Address" /></div> -2-> -1-> -->
+<!-- 				<!-1- <!-2- 				<div class="col-4 col-12-xsmall"><input type="submit" value="Get Started" class="fit primary" /></div> -2-> -1-> -->
+<!-- 				<!-1- <!-2- 			</div> -2-> -1-> -->
+<!-- 				<!-1- <!-2- 		</form> -2-> -1-> -->
+<!-- 				<!-1- <!-2- 	</div> -2-> -1-> -->
+<!-- 				<!-1- <!-2- </section> -2-> -1-> -->
+
+<!-- 			<!-1- <!-2- Footer -2-> -1-> -->
+<!-- 				<!-1- <footer id="footer"> -1-> -->
+<!-- 				<!-1- 	<ul class="icons"> -1-> -->
+<!-- 				<!-1- 		<li><a href="https://twitter.com/astrodomjt" class="icon solid brands fa-x-twitter" title="X (Twitter)"><span class="label">Twitter</span></a></li> -1-> -->
+<!-- 				<!-1- 		<li><a href="https://www.linkedin.com/in/dominic-taylor-004a8b196/" class="icon brands fa-linkedin-in" title="LinkedIn"><span class="label">LinkedIn</span></a></li> -1-> -->
+<!-- 				<!-1- 		<li><a href="https://github.com/dominicjtaylor" class="icon solid brands fa-github" title="GitHub"><span class="label">GitHub</span></a></li> -1-> -->
+<!-- 				<!-1- 		<li><a href="mailto:dominic.j.taylor@durham.ac.uk" class="icon solid fa-envelope" title="Email"><span class="label">Email</span></a></li> -1-> -->
+<!-- 				<!-1- 	</ul> -1-> -->
+<!-- 				<!-1- 	<ul class="copyright"> -1-> -->
+<!-- 				<!-1- 		<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li> -1-> -->
+<!-- 				<!-1- 	</ul> -1-> -->
+<!-- 				<!-1- </footer> -1-> -->
+
+<!-- 		</div> -->
+
+<!-- 		<div id="webgl-background"></div> -->
+
+<!-- 		<h1 style="position:relative; z-index:1; color:white; text-align:center; margin-top:40px;"> -->
+<!-- 			Welcome to my page -->
+<!-- 		</h1> -->
+
+<!-- 		<script type="module" src="js/mountain.js"></script> -->
+
+<!-- 		<!-1- Scripts -1-> -->
+<!-- 			<script src="assets/js/jquery.min.js"></script> -->
+<!-- 			<script src="assets/js/jquery.scrolly.min.js"></script> -->
+<!-- 			<script src="assets/js/jquery.dropotron.min.js"></script> -->
+<!-- 			<script src="assets/js/jquery.scrollex.min.js"></script> -->
+<!-- 			<script src="assets/js/browser.min.js"></script> -->
+<!-- 			<script src="assets/js/breakpoints.min.js"></script> -->
+<!-- 			<script src="assets/js/util.js"></script> -->
+<!-- 			<script src="assets/js/main.js"></script> -->
+
+<!-- 	</body> -->
+<!-- </html> -->
+
+<!-- <!DOCTYPE html> -->
+<!-- <html lang="en"> -->
+<!-- <head> -->
+<!--   <meta charset="UTF-8"> -->
+<!--   <title>My WebGL Page</title> -->
+<!--   <style> -->
+<!--     body, html { -->
+<!--       margin: 0; -->
+<!--       height: 100%; -->
+<!--       overflow: hidden; -->
+<!--     } -->
+<!--   </style> -->
+<!-- </head> -->
+<!-- <body> -->
+<!--   <div id="webgl-background"></div> -->
+<!--   <!-1- <div id="webgl-background" style="width:100%; height:100%; background:blue;"></div> -1-> -->
+
+<!--   <!-1- Your other page content -1-> -->
+<!--   <h1 style="position:relative; z-index:1; color:white; text-align:center; margin-top:40px;"> -->
+<!--     Welcome to my page -->
+<!--   </h1> -->
+
+<!--   <!-1- Load mountain.js -1-> -->
+<!--   <!-1- <script type="module" src="js/mountain.js"></script> -1-> -->
+<!--   <script type="module" src="js/mountain.js" defer></script> -->
+<!-- </body> -->
+<!-- </html> -->
+
