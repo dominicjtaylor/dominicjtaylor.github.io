@@ -33,7 +33,7 @@ export function initMountain() {
   // PlaneGeometry
   const width = 100;
   const height = 100;
-  const segments = 600;
+  const segments = 1000;
   const geometry = new THREE.PlaneGeometry(width, height, segments, segments);
 
   const position = geometry.attributes.position;
@@ -105,8 +105,10 @@ export function initMountain() {
 	const grassDisp = textureLoader.load('js/textures/Grass/rocky_terrain_02_disp_4k.png');
 	const grassRough = textureLoader.load('js/textures/Grass/rocky_terrain_02_rough_4k.exr');
 	const sandrockColor = textureLoader.load('js/textures/SandRocks/coast_sand_rocks_02_diff_4k.jpg');
+	const snow2Color = textureLoader.load('js/textures/Snow2/Snow010A_8K-JPG_AmbientOcclusion.jpg');
 
 	snowColor.wrapS = snowColor.wrapT = THREE.RepeatWrapping;
+	snow2Color.wrapS = snow2Color.wrapT = THREE.RepeatWrapping;
 	iceColor.wrapS = iceColor.wrapT = THREE.RepeatWrapping;
 	rockColor.wrapS = rockColor.wrapT = THREE.RepeatWrapping;
 	grassColor.wrapS = grassColor.wrapT = THREE.RepeatWrapping;
@@ -115,6 +117,7 @@ export function initMountain() {
 	const mountainUniforms = {
 		rockTex: { value: rockColor },
 		snowTex: { value: snowColor },
+		snow2Tex: { value: snow2Color },
 		iceTex: { value: iceColor },
 		grassTex: { value: grassColor },
 		sandrockTex: { value: sandrockColor },
@@ -149,9 +152,9 @@ export function initMountain() {
 	    uniform sampler2D rockTex;
 	    uniform sampler2D sandrockTex;
 	    uniform sampler2D snowTex;
+	    uniform sampler2D snow2Tex;
 	    uniform sampler2D iceTex;
 	    uniform sampler2D grassTex;
-	    uniform sampler2D cloudTex;
 	    uniform vec2 rockRepeat;
 	    uniform vec2 sandrockRepeat;
 	    uniform vec2 snowRepeat;
@@ -171,13 +174,13 @@ export function initMountain() {
 
 	    void main() {
 	      float blend1 = smoothstep(0.0, 2.0, vHeight);
-	      float blend2 = smoothstep(4.0, 12.0, vHeight);
+	      float blend2 = smoothstep(6.0, 12.0, vHeight);
 
-	      vec3 snowC = texture2D(snowTex, vUv * snowRepeat).rgb;
+	      vec3 snowC = texture2D(snow2Tex, vUv * snowRepeat).rgb;
 	      vec3 iceC = texture2D(iceTex, vUv * iceRepeat).rgb;
 	      vec3 sandrockC = texture2D(sandrockTex, vUv * sandrockRepeat).rgb;
 
-	      vec3 color = mix(sandrockC,iceC,blend1);
+	      vec3 color = mix(sandrockC,snowC,blend1);
 	      vec3 baseColor = mix(color,iceC,blend2);
 
 	      gl_FragColor = vec4(baseColor, 1.0);
@@ -289,11 +292,17 @@ horizontalScroll.addEventListener('touchstart', (event) => {
 }, { passive: true });
 
 horizontalScroll.addEventListener('touchmove', (event) => {
+	event.preventDefault();
   const touchX = event.touches[0].clientX;
   const deltaX = touchStartX - touchX;
 
   // move the scroll container by the delta
-  horizontalScroll.scrollLeft += deltaX;
+	const sensitivity = 0.2;
+	const fractionDrag = (deltaX / window.innerWidth) / sensitivity;
+
+	currentSection += fractionDrag;
+	currentSection = Math.max(0,Math.min(cameraStates.length - 1, currentSection));
+
   touchStartX = touchX;
 }, { passive: false });
 
