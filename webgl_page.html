@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Horizontal Scroll WebGL</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+      font-family: sans-serif;
+    }
+
+    /* WebGL canvas container */
+    #webgl-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;  /* behind sections */
+    }
+
+    /* Horizontal scroll container */
+    #horizontal-scroll {
+      width: 100vw;
+      height: 100vh;
+      overflow-x: scroll;
+      overflow-y: hidden;
+      scroll-snap-type: x mandatory;
+      display: flex;
+    }
+
+    /* Wrapper for panels */
+    .panel-wrapper {
+      display: flex;
+      flex-direction: row;
+      width: 500vw; /* 4 sections */
+      height: 100vh;
+    }
+
+    /* Individual panels */
+    .panel {
+      width: 100vw;
+      height: 100vh;
+      scroll-snap-align: start;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 3rem;
+      color: black;
+      position: relative;
+      z-index: 1;  /* above WebGL canvas */
+    }
+
+    /* Optional background colors for clarity */
+    #section1 { background: rgba(0,0,0,0); }
+    #section2 { background: rgba(0,0,0,0); }
+    #section3 { background: rgba(0,0,0,0); }
+    #section4 { background: rgba(0,0,0,0); }
+    #section5 { background: rgba(0,0,0,0); }
+  </style>
+</head>
+<body>
+
+  <!-- WebGL canvas container -->
+  <div id="webgl-container"></div>
+
+  <!-- Horizontal scrolling sections -->
+  <div id="horizontal-scroll">
+    <div class="panel-wrapper">
+      <section class="panel" id="section1">Intro</section>
+      <section class="panel" id="section2">About</section>
+      <section class="panel" id="section3">Work</section>
+      <section class="panel" id="section4">Projects</section>
+      <section class="panel" id="section5">Contact</section>
+    </div>
+  </div>
+
+  <!-- JS -->
+  <script type="module" src="js/webgl_page.js"></script>
+
+</body>
+</html>
+

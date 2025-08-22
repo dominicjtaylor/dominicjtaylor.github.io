@@ -12,11 +12,23 @@ export function initMountain() {
   // camera.position.set(8, 12, 11);
   // camera.lookAt(6, 11, 0);
 
-  const renderer = new THREE.WebGLRenderer({ alpha: true });
-  renderer.setSize(window.innerWidth, window.innerHeight);
-	// renderer.setSize(container.clientWidth, container.clientHeight);
-  document.body.appendChild(renderer.domElement);
+  // const renderer = new THREE.WebGLRenderer({ alpha: true });
+  // renderer.setSize(window.innerWidth, window.innerHeight);
+	// // renderer.setSize(container.clientWidth, container.clientHeight);
+  // document.body.appendChild(renderer.domElement);
 	// container.appendChild(renderer.domElement);
+	
+	const horizontalScroll = document.getElementById("horizontal-scroll"); //grab the container element
+	horizontalScroll.addEventListener('scroll', () => {
+	  const sectionIndex = horizontalScroll.scrollLeft / window.innerWidth;
+	  const clampedIndex = Math.min(cameraStates.length - 1, Math.max(0, sectionIndex));
+	  currentSection = clampedIndex;
+	});
+	const container = document.getElementById("webgl-container");
+	const renderer = new THREE.WebGLRenderer({ alpha: true }); //create renderer
+	renderer.setSize(window.innerWidth, window.innerHeight);
+	renderer.setClearColor(0x000000, 0);
+	container.appendChild(renderer.domElement); //append to the container
 
   // PlaneGeometry
   const width = 100;
@@ -158,7 +170,7 @@ export function initMountain() {
 	    in vec2 vUv;
 
 	    void main() {
-	      float blend1 = smoothstep(0.0, 5.0, vHeight);
+	      float blend1 = smoothstep(0.0, 2.0, vHeight);
 	      float blend2 = smoothstep(4.0, 12.0, vHeight);
 
 	      vec3 snowC = texture2D(snowTex, vUv * snowRepeat).rgb;
@@ -235,6 +247,19 @@ export function initMountain() {
 	scene.add(ambient);
 
 	//Pivoting and camera movement
+	const cameraStates = [
+	  { pivot: new THREE.Vector3(-1, 8, -10), offset: new THREE.Vector3(10, 5, 30) }, // section 1
+	  { pivot: new THREE.Vector3(-1, 8, -10), offset: new THREE.Vector3(35, 5, 5) }, // section 2
+	  { pivot: new THREE.Vector3(-1, 8, -10), offset: new THREE.Vector3(25, 8, -25) }, // section 3
+	  { pivot: new THREE.Vector3(-1, 8, -10), offset: new THREE.Vector3(-15, 10, 25) }, // section 3
+	  { pivot: new THREE.Vector3(-1, 8, -10), offset: new THREE.Vector3(0, 15, 35) }, // section 4
+	];
+
+	let currentSection = 0;
+	window.addEventListener('scroll', () => {
+	  const sectionIndex = Math.round(window.scrollY / window.innerHeight);
+	  currentSection = Math.min(cameraStates.length - 1, Math.max(0, sectionIndex));
+	});
 	
 	const clock = new THREE.Clock();
 	const pivot = new THREE.Vector3(-1,8,-10);
@@ -249,11 +274,6 @@ export function initMountain() {
 
 	let targetRotation = angle;
 
-	// Mouse
-	window.addEventListener('mousemove', (event) => {
-	  // map mouseX to range -1 to 1
-	  targetRotation = ((event.clientX / window.innerWidth) - 0) * Math.PI / 1; 
-	});
 	// Touch
 	window.addEventListener('touchmove', (event) => {
 	  event.preventDefault(); // stop page from scrolling
@@ -261,29 +281,34 @@ export function initMountain() {
 	  targetRotation = ((touch.clientX / window.innerWidth) - 0) * Math.PI / 1;
 	}, { passive: false });
 
-  function animate() {
-    requestAnimationFrame(animate);
-	  const delta = clock.getDelta();
+function animate() {
+  requestAnimationFrame(animate);
 
-	angle += (targetRotation - angle) * 0.08;
+const delta = clock.getDelta();
+  const lerpFactor = 0.05;
+  const prevSection = Math.floor(currentSection);
+  const nextSection = Math.ceil(currentSection);
+  const t = currentSection % 1; // interpolation factor between sections
 
-	// Orbit camera around pivot (mountain peak)
-	camera.position.x = pivot.x + radius * Math.cos(angle);
-	camera.position.z = pivot.z + radius * Math.sin(angle);
-	camera.position.y = pivot.y //+ 20; // slightly above
-	camera.lookAt(pivot);
+  const prevState = cameraStates[prevSection];
+  const nextState = cameraStates[nextSection];
 
-	// mountainMesh.rotation.z += (targetRotation - mountainMesh.rotation.z) * 0.08;
+  const desiredPos = new THREE.Vector3().lerpVectors(prevState.offset.clone().add(prevState.pivot), 
+                                                     nextState.offset.clone().add(nextState.pivot), 
+                                                     t);
+  camera.position.lerp(desiredPos, lerpFactor);
 
-	// cloudPivots.forEach(pivot => {
-	// 	pivot.rotation.y += (targetRotation - pivot.rotation.y) * 0.1});
-	clouds.forEach(cloud => {
-		cloud.lookAt(camera.position);
-	});
+  const lookTarget = new THREE.Vector3().lerpVectors(prevState.pivot, nextState.pivot, t);
+  camera.lookAt(lookTarget);
 
-	animateClouds(delta);
-	renderer.render(scene, camera);
-  }
+clouds.forEach(cloud => {             
+        cloud.lookAt(camera.position);
+});
+animateClouds(delta);
+
+
+  renderer.render(scene, camera);
+}
   animate();
 
   window.addEventListener('resize', () => {
