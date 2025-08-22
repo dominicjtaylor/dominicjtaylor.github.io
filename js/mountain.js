@@ -58,8 +58,10 @@ export function initMountain() {
 		const dx = x - peak.x;
 		const dy = y - peak.y;
 		const r = Math.sqrt(dx * dx + dy * dy);
+		const r2 = dx*dx + dy*dy;
 		const noiseValue = simplex.noise2D(x * noiseScale, y * noiseScale) * 0.06;
 		// heightValue += Math.max(0,peak.height-r) + Math.random()*0.3;
+		// heightValue += peak.height * Math.exp(-r2 / (2 * (peak.height*0.4)**2)) + noiseValue;
 		heightValue += Math.max(0,peak.height-r) + noiseValue;
 		// heightValue = Math.max(0,peak.height-r) + noise.noise2D(x
 	}
@@ -82,17 +84,20 @@ export function initMountain() {
 	const snowDisp = textureLoader.load('js/textures/Snow/Snow011_2K-JPG_Displacement.jpg');
 	const rockColor = textureLoader.load('js/textures/GrassRock/rocky_terrain_diff_4k.jpg');
 	const grassColor = textureLoader.load('js/textures/Grass/rocky_terrain_02_diff_4k.jpg');
+	const grassNormal = textureLoader.load('js/textures/Grass/rocky_terrain_02_nor_gl_4k.jpg');
+	const grassDisp = textureLoader.load('js/textures/Grass/rocky_terrain_02_disp_4k.jpg');
+	const grassRough = textureLoader.load('js/textures/Grass/rocky_terrain_02_rough_4k.jpg');
 	const sandrockColor = textureLoader.load('js/textures/SandRocks/coast_sand_rocks_02_diff_4k.jpg');
-	const cloudColor = textureLoader.load('js/textures/Cloud/Fabric081C_4K-JPG_Color.jpg');
+	// const cloudColor = textureLoader.load('js/textures/Cloud/Fabric081C_4K-JPG_Color.jpg');
 
 	snowColor.wrapS = snowColor.wrapT = THREE.RepeatWrapping;
 	iceColor.wrapS = iceColor.wrapT = THREE.RepeatWrapping;
 	rockColor.wrapS = rockColor.wrapT = THREE.RepeatWrapping;
 	grassColor.wrapS = grassColor.wrapT = THREE.RepeatWrapping;
 	sandrockColor.wrapS = sandrockColor.wrapT = THREE.RepeatWrapping;
-	cloudColor.wrapS = cloudColor.wrapT = THREE.RepeatWrapping;
+	// cloudColor.wrapS = cloudColor.wrapT = THREE.RepeatWrapping;
 	
-	const cloudPos = new THREE.Vector2(0,0);
+	// const cloudPos = new THREE.Vector2(0,0);
 	
 	const mountainUniforms = {
 		rockTex: { value: rockColor },
@@ -100,6 +105,12 @@ export function initMountain() {
 		iceTex: { value: iceColor },
 		grassTex: { value: grassColor },
 		sandrockTex: { value: sandrockColor },
+		snowNormalTex: { value: snowNormal },
+		grassNormalTex: { value: grassNormal },
+		snowRoughTex: { value: snowRough },
+		grassRoughTex: { value: grassRough },
+		snowDispTex: { value: snowDisp },
+		grassDispTex: { value: grassDisp },
 
 		snowRepeat: { value: new THREE.Vector2(30,25) },
 		iceRepeat: { value: new THREE.Vector2(20,30) },
@@ -133,8 +144,12 @@ export function initMountain() {
 	    uniform vec2 snowRepeat;
 	    uniform vec2 iceRepeat;
 	    uniform vec2 grassRepeat;
-	    uniform vec2 cloudRepeat;
-	    uniform vec2 cloudOffset;
+	    uniform sampler2D snowNormalTex;
+	    uniform sampler2D grassNormalTex;
+	    uniform sampler2D snowRoughTex;
+	    uniform sampler2D grassRoughTex;
+	    uniform sampler2D snowDispTex;
+	    uniform sampler2D grassDispTex;
 	    uniform float time;
 
 	    varying float vHeight;
@@ -152,14 +167,6 @@ export function initMountain() {
 	      vec3 color = mix(sandrockC,snowC,blend1);
 	      vec3 baseColor = mix(color,iceC,blend2);
 
-	      // // Clouds
-	      // vec2 cloudUV = vPosition.xz * 0.05;
-	      // cloudUV += vec2(time * 0.01, time * 0.005);
-	      // vec3 cloudColor = texture2D(cloudTex,cloudUV).rgb;
-	      // float cloudAlpha = smoothstep(0.4,0.5,vPosition.y);
-	      // float heightFactor = smoothstep(9.0,20.0,vHeight);
-	      // cloudAlpha *= heightFactor;
-
 	      gl_FragColor = vec4(baseColor, 1.0);
 	    }
 	  `,
@@ -169,47 +176,53 @@ export function initMountain() {
   scene.add(mountainMesh);
 
 	// Load the cloud texture
-	const cloudTexture = new THREE.TextureLoader().load('js/textures/Cloud/01.png');
+	const cloudTexture = new THREE.TextureLoader().load('js/textures/Cloud/08.png');
 
 	// Create the cloud material
 	const cloudMaterial = new THREE.MeshLambertMaterial({
 	    map: cloudTexture,
 	    transparent: true,   // important for blending
-	    opacity: 0.7,
-	    depthWrite: false
+	    opacity: 0.99,
+	    depthWrite: false,
+		side: THREE.DoubleSide
 	});
 
 	const clouds = [];
 	const cloudPivots = [];
 
-	for (let i = 0; i < 20; i++) {
+	const cloudPositions = [
+	    { x: 0, y: 16, z: -30},
+	    { x: -15, y: 4, z: -15},
+	    // { x: 14, y: 16, z: -10},
+	    { x: -30, y: 8, z: -1 },
+	    // { x: 0, y: 16, z: 2 },
+	    { x: 20, y: 10, z: 4 },
+	    { x: -10, y: 6, z: 5 },
+	    { x: 2, y: 8, z: 7},
+	    { x: 15, y: 2, z: 2},
+	];
+
+	// for (let i = 0; i < 3; i++) {
+	cloudPositions.forEach(pos => {
 	    const cloudGeo = new THREE.PlaneGeometry(30, 20);
 	    const cloud = new THREE.Mesh(cloudGeo, cloudMaterial);
 
 	    const pivot = new THREE.Object3D();
 
-	    // place pivot at mountain base (0,0,0)
 	    scene.add(pivot);
 
-	    // position cloud away from the pivot
-	    cloud.position.set(
-		(Math.random() - 0.5) * 200,
-		20 + Math.random() * 50, // higher up
-		(Math.random() - 0.5) * 200
-	    );
+		cloud.position.set(pos.x,pos.y,pos.z);
 
 	    pivot.add(cloud);
 	    clouds.push(cloud);
 	    cloudPivots.push(pivot);
-	}
+	});
 	
 	// Animate subtle drift
 	function animateClouds(deltaTime) {
-	    clouds.forEach(c => {
-		c.position.x += deltaTime * 0.05; // slower than camera movement
-		c.position.z += deltaTime * 0.04;
-		c.rotation.z += deltaTime * 0.03; // gentle rotation
-	    });
+	    // clouds.forEach(c => {
+		// c.position.x += deltaTime * 0.3; // slower than camera movement
+	    // });
 	}
 
 	// Lighting
@@ -234,12 +247,17 @@ window.addEventListener('mousemove', (event) => {
 
 	mountainMesh.rotation.z += (targetRotation - mountainMesh.rotation.z) * 0.1;
 
-	// cloudPivots.forEach(pivot => {
-	// 	pivot.rotation.z += (targetRotation - pivot.rotation.z) * 0.1;
-	// });
 	cloudPivots.forEach(pivot => {
-		pivot.rotation.z += 0.001;
+		pivot.rotation.y += (targetRotation - pivot.rotation.y) * 0.1});
+	clouds.forEach(cloud => {
+		cloud.lookAt(camera.position);
 	});
+
+	// });
+	// cloudPivots.forEach(pivot => {
+	// 	pivot.rotation.y += 0.001;
+	// });
+	// cloudPivots.rotation.y += (targetRotation - cloudPivots.rotation.y) * 0.1;
 
 	animateClouds(delta);
 	renderer.render(scene, camera);
