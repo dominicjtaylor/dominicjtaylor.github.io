@@ -234,10 +234,17 @@ export function initMountain() {
 	scene.add(ambient);
 
 let targetRotation = 0;
+// Mouse
 window.addEventListener('mousemove', (event) => {
   // map mouseX to range -1 to 1
   targetRotation = ((event.clientX / window.innerWidth) - 0.5) * Math.PI / 2; 
 });
+// Touch
+window.addEventListener('touchmove', (event) => {
+  event.preventDefault(); // stop page from scrolling
+  const touch = event.touches[0];
+  targetRotation = ((touch.clientX / window.innerWidth) - 0.5) * Math.PI / 2;
+}, { passive: false });
 
 	const clock = new THREE.Clock();
 
