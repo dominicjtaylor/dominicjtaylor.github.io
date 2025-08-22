@@ -33,7 +33,7 @@ export function initMountain() {
   // PlaneGeometry
   const width = 100;
   const height = 100;
-  const segments = 1000;
+  const segments = 600;
   const geometry = new THREE.PlaneGeometry(width, height, segments, segments);
 
   const position = geometry.attributes.position;
@@ -94,7 +94,7 @@ export function initMountain() {
 	geometry.computeVertexNormals();
 
 	const textureLoader = new THREE.TextureLoader();
-	const iceColor = textureLoader.load('js/textures/Snow/Snow011_2K-JPG_AmbientOcclusion.jpg');
+	const snowAO = textureLoader.load('js/textures/Snow/Snow011_2K-JPG_AmbientOcclusion.jpg');
 	const snowColor = textureLoader.load('js/textures/Snow/Snow011_2K-JPG_Color.jpg');
 	const snowNormal = textureLoader.load('js/textures/Snow/Snow011_2K-JPG_NormalGL.jpg');
 	const snowRough = textureLoader.load('js/textures/Snow/Snow011_2K-JPG_Roughness.jpg');
@@ -105,7 +105,8 @@ export function initMountain() {
 	const grassDisp = textureLoader.load('js/textures/Grass/rocky_terrain_02_disp_4k.png');
 	const grassRough = textureLoader.load('js/textures/Grass/rocky_terrain_02_rough_4k.exr');
 	const sandrockColor = textureLoader.load('js/textures/SandRocks/coast_sand_rocks_02_diff_4k.jpg');
-	const snow2Color = textureLoader.load('js/textures/Snow2/Snow010A_8K-JPG_AmbientOcclusion.jpg');
+	const snow2Color = textureLoader.load('js/textures/Snow2/Snow010A_4K-JPG_AmbientOcclusion.jpg');
+	const snow2AO = textureLoader.load('js/textures/Snow2/Snow010A_4K-JPG_Color.jpg');
 
 	snowColor.wrapS = snowColor.wrapT = THREE.RepeatWrapping;
 	snow2Color.wrapS = snow2Color.wrapT = THREE.RepeatWrapping;
@@ -141,11 +142,42 @@ export function initMountain() {
 	    varying float vHeight;
 	    out vec3 vPosition;
 	    out vec2 vUv;
+	    uniform float displacementScale;
+	    uniform sampler2D rockDispTex;
+		uniform sampler2D snowDispTex;
+		uniform sampler2D iceDispTex;
 	    void main() {
-	      vPosition = position;
-	      vUv = uv;
-	      vHeight = position.z;
-	      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+		vUv = uv;
+
+		float rockDisp = texture2D(rockDispTex, uv).r;
+		float snowDisp = texture2D(snowDispTex, uv).r;
+		float iceDisp = texture2D(iceDispTex, uv).r;
+
+		// Blend them based on height
+		float heightBlend1 = smoothstep(0.0, 2.0, position.z);
+		float heightBlend2 = smoothstep(6.0, 12.0, position.z);
+
+		float totalDisp = mix(rockDisp, snowDisp, heightBlend1);
+		totalDisp = mix(totalDisp, iceDisp, heightBlend2);
+
+		vec3 displacedPosition = position + normal * totalDisp * displacementScale;
+
+		vHeight = displacedPosition.z; // or y if Y is up
+		vPosition = displacedPosition;
+
+		gl_Position = projectionMatrix * modelViewMatrix * vec4(displacedPosition, 1.0);
+
+		// vec3 displacedPosition = position;
+		// float disp = texture2D(snowDispTex, uv).r;
+		// displacedPosition.z += disp * displacementScale;
+		// vPosition = displacedPosition;
+		// vHeight = displacedPosition.z;
+		// gl_Position = projectionMatrix * modelViewMatrix * vec4(displacedPosition, 1.0);
+
+	      // vPosition = position;
+	      // vUv = uv;
+	      // vHeight = position.z;
+	      // gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
 	    }
 	  `,
 	  fragmentShader: `
