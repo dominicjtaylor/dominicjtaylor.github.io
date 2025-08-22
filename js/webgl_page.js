@@ -110,7 +110,7 @@ export function initMountain() {
 
 	snowColor.wrapS = snowColor.wrapT = THREE.RepeatWrapping;
 	snow2Color.wrapS = snow2Color.wrapT = THREE.RepeatWrapping;
-	iceColor.wrapS = iceColor.wrapT = THREE.RepeatWrapping;
+	snowAO.wrapS = snowAO.wrapT = THREE.RepeatWrapping;
 	rockColor.wrapS = rockColor.wrapT = THREE.RepeatWrapping;
 	grassColor.wrapS = grassColor.wrapT = THREE.RepeatWrapping;
 	sandrockColor.wrapS = sandrockColor.wrapT = THREE.RepeatWrapping;
@@ -119,7 +119,7 @@ export function initMountain() {
 		rockTex: { value: rockColor },
 		snowTex: { value: snowColor },
 		snow2Tex: { value: snow2Color },
-		iceTex: { value: iceColor },
+		snowAOTex: { value: snowAO },
 		grassTex: { value: grassColor },
 		sandrockTex: { value: sandrockColor },
 		snowNormalTex: { value: snowNormal },
@@ -130,7 +130,7 @@ export function initMountain() {
 		grassDispTex: { value: grassDisp },
 
 		snowRepeat: { value: new THREE.Vector2(30,25) },
-		iceRepeat: { value: new THREE.Vector2(20,30) },
+		snowAORepeat: { value: new THREE.Vector2(20,30) },
 		rockRepeat: { value: new THREE.Vector2(20,20) },
 		sandrockRepeat: { value: new THREE.Vector2(20,20) },
 		grassRepeat: { value: new THREE.Vector2(20,20) },
@@ -145,20 +145,20 @@ export function initMountain() {
 	    uniform float displacementScale;
 	    uniform sampler2D rockDispTex;
 		uniform sampler2D snowDispTex;
-		uniform sampler2D iceDispTex;
+		uniform sampler2D snowAODispTex;
 	    void main() {
 		vUv = uv;
 
 		float rockDisp = texture2D(rockDispTex, uv).r;
 		float snowDisp = texture2D(snowDispTex, uv).r;
-		float iceDisp = texture2D(iceDispTex, uv).r;
+		float snowAODisp = texture2D(snowAODispTex, uv).r;
 
 		// Blend them based on height
 		float heightBlend1 = smoothstep(0.0, 2.0, position.z);
 		float heightBlend2 = smoothstep(6.0, 12.0, position.z);
 
 		float totalDisp = mix(rockDisp, snowDisp, heightBlend1);
-		totalDisp = mix(totalDisp, iceDisp, heightBlend2);
+		totalDisp = mix(totalDisp, snowAODisp, heightBlend2);
 
 		vec3 displacedPosition = position + normal * totalDisp * displacementScale;
 
@@ -166,13 +166,6 @@ export function initMountain() {
 		vPosition = displacedPosition;
 
 		gl_Position = projectionMatrix * modelViewMatrix * vec4(displacedPosition, 1.0);
-
-		// vec3 displacedPosition = position;
-		// float disp = texture2D(snowDispTex, uv).r;
-		// displacedPosition.z += disp * displacementScale;
-		// vPosition = displacedPosition;
-		// vHeight = displacedPosition.z;
-		// gl_Position = projectionMatrix * modelViewMatrix * vec4(displacedPosition, 1.0);
 
 	      // vPosition = position;
 	      // vUv = uv;
@@ -185,12 +178,12 @@ export function initMountain() {
 	    uniform sampler2D sandrockTex;
 	    uniform sampler2D snowTex;
 	    uniform sampler2D snow2Tex;
-	    uniform sampler2D iceTex;
+	    uniform sampler2D snowAOTex;
 	    uniform sampler2D grassTex;
 	    uniform vec2 rockRepeat;
 	    uniform vec2 sandrockRepeat;
 	    uniform vec2 snowRepeat;
-	    uniform vec2 iceRepeat;
+	    uniform vec2 snowAORepeat;
 	    uniform vec2 grassRepeat;
 	    uniform sampler2D snowNormalTex;
 	    uniform sampler2D grassNormalTex;
@@ -209,11 +202,11 @@ export function initMountain() {
 	      float blend2 = smoothstep(6.0, 12.0, vHeight);
 
 	      vec3 snowC = texture2D(snow2Tex, vUv * snowRepeat).rgb;
-	      vec3 iceC = texture2D(iceTex, vUv * iceRepeat).rgb;
+	      vec3 snowAOC = texture2D(snowAOTex, vUv * snowAORepeat).rgb;
 	      vec3 sandrockC = texture2D(sandrockTex, vUv * sandrockRepeat).rgb;
 
 	      vec3 color = mix(sandrockC,snowC,blend1);
-	      vec3 baseColor = mix(color,iceC,blend2);
+	      vec3 baseColor = mix(color,snowAOC,blend2);
 
 	      gl_FragColor = vec4(baseColor, 1.0);
 	    }
