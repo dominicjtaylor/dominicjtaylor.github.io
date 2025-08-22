@@ -275,12 +275,27 @@ export function initMountain() {
 
 	let targetRotation = angle;
 
-	// Touch
-	window.addEventListener('touchmove', (event) => {
-	  event.preventDefault(); // stop page from scrolling
-	  const touch = event.touches[0];
-	  targetRotation = ((touch.clientX / window.innerWidth) - 0) * Math.PI / 1;
-	}, { passive: false });
+	// // Touch
+	// window.addEventListener('touchmove', (event) => {
+	//   event.preventDefault(); // stop page from scrolling
+	//   const touch = event.touches[0];
+	//   targetRotation = ((touch.clientX / window.innerWidth) - 0) * Math.PI / 1;
+	// }, { passive: false });
+	
+let touchStartX = 0;
+
+horizontalScroll.addEventListener('touchstart', (event) => {
+  touchStartX = event.touches[0].clientX;
+}, { passive: true });
+
+horizontalScroll.addEventListener('touchmove', (event) => {
+  const touchX = event.touches[0].clientX;
+  const deltaX = touchStartX - touchX;
+
+  // move the scroll container by the delta
+  horizontalScroll.scrollLeft += deltaX;
+  touchStartX = touchX;
+}, { passive: false });
 
 function animate() {
   requestAnimationFrame(animate);
