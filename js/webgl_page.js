@@ -206,13 +206,14 @@ export function initMountain() {
 	const cloudPositions = [
 	    { x: 0, y: 16, z: -30},
 	    { x: -15, y: 4, z: -15},
-	    // { x: 14, y: 16, z: -10},
 	    { x: -30, y: 8, z: -1 },
-	    // { x: 0, y: 16, z: 2 },
 	    { x: 20, y: 10, z: 4 },
 	    { x: -10, y: 6, z: 5 },
 	    { x: 2, y: 8, z: 7},
 	    { x: 15, y: 2, z: 2},
+	    { x: 5, y: 5, z: -35},
+	    { x: 20, y: 10, z: -20},
+	    { x: 25, y: 5, z: 10},
 	];
 
 	// for (let i = 0; i < 3; i++) {
@@ -250,7 +251,7 @@ export function initMountain() {
 	const cameraStates = [
 	  { pivot: new THREE.Vector3(-1, 8, -10), offset: new THREE.Vector3(10, 5, 30) }, // section 1
 	  { pivot: new THREE.Vector3(-1, 8, -10), offset: new THREE.Vector3(35, 5, 5) }, // section 2
-	  { pivot: new THREE.Vector3(-1, 8, -10), offset: new THREE.Vector3(25, 8, -25) }, // section 3
+	  { pivot: new THREE.Vector3(-1, 8, -10), offset: new THREE.Vector3(25, 8, -30) }, // section 3
 	  { pivot: new THREE.Vector3(-1, 8, -10), offset: new THREE.Vector3(-15, 10, 25) }, // section 3
 	  { pivot: new THREE.Vector3(-1, 8, -10), offset: new THREE.Vector3(0, 15, 35) }, // section 4
 	];
