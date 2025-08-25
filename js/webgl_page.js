@@ -94,19 +94,42 @@ export function initMountain() {
 	geometry.computeVertexNormals();
 
 	const textureLoader = new THREE.TextureLoader();
-	const snowAO = textureLoader.load('js/textures/Snow/Snow011_2K-JPG_AmbientOcclusion.jpg');
 	const snowColor = textureLoader.load('js/textures/Snow/Snow011_2K-JPG_Color.jpg');
+	const snowAO = textureLoader.load('js/textures/Snow/Snow011_2K-JPG_AmbientOcclusion.jpg');
+	// snowAO.encoding = THREE.LinearEncoding;
 	const snowNormal = textureLoader.load('js/textures/Snow/Snow011_2K-JPG_NormalGL.jpg');
+	snowNormal.encoding = THREE.LinearEncoding;
 	const snowRough = textureLoader.load('js/textures/Snow/Snow011_2K-JPG_Roughness.jpg');
+	snowRough.encoding = THREE.LinearEncoding;
 	const snowDisp = textureLoader.load('js/textures/Snow/Snow011_2K-JPG_Displacement.jpg');
+	snowDisp.encoding = THREE.LinearEncoding;
 	const rockColor = textureLoader.load('js/textures/GrassRock/rocky_terrain_diff_4k.jpg');
 	const grassColor = textureLoader.load('js/textures/Grass/rocky_terrain_02_diff_4k.jpg');
 	const grassNormal = textureLoader.load('js/textures/Grass/rocky_terrain_02_nor_gl_4k.exr');
+	grassNormal.encoding = THREE.LinearEncoding;
 	const grassDisp = textureLoader.load('js/textures/Grass/rocky_terrain_02_disp_4k.png');
+	grassDisp.encoding = THREE.LinearEncoding;
 	const grassRough = textureLoader.load('js/textures/Grass/rocky_terrain_02_rough_4k.exr');
+	grassRough.encoding = THREE.LinearEncoding;
 	const sandrockColor = textureLoader.load('js/textures/SandRocks/coast_sand_rocks_02_diff_4k.jpg');
-	const snow2Color = textureLoader.load('js/textures/Snow2/Snow010A_4K-JPG_AmbientOcclusion.jpg');
-	const snow2AO = textureLoader.load('js/textures/Snow2/Snow010A_4K-JPG_Color.jpg');
+	const sandrockDisp = textureLoader.load('js/textures/SandRocks/coast_sand_rocks_02_disp_4k.png');
+	sandrockDisp.encoding = THREE.LinearEncoding;
+	const sandrockRough = textureLoader.load('js/textures/SandRocks/coast_sand_rocks_02_rough_4k.exr');
+	sandrockRough.encoding = THREE.LinearEncoding;
+	const sandrockNormal = textureLoader.load('js/textures/SandRocks/coast_sand_rocks_02_nor_gl_4k.exr');
+	sandrockNormal.encoding = THREE.LinearEncoding;
+	const snow2Color= textureLoader.load('js/textures/Snow2/Snow010A_4K-JPG_Color.jpg');
+	// snow2Color.encoding = THREE.LinearEncoding;
+	const snow2AO = textureLoader.load('js/textures/Snow2/Snow010A_4K-JPG_AmbientOcclusion.jpg');
+	// snow2AO.encoding = THREE.LinearEncoding;
+	const snow2Normal = textureLoader.load('js/textures/Snow2/Snow010A_4K-JPG_NormalGL.jpg');
+	snow2Normal.encoding = THREE.LinearEncoding;
+	const snow2Rough = textureLoader.load('js/textures/Snow2/Snow010A_4K-JPG_Roughness.jpg');
+	snow2Rough.encoding = THREE.LinearEncoding;
+	const snow2Disp = textureLoader.load('js/textures/Snow2/Snow010A_4K-JPG_Displacement.jpg');
+	snow2Disp.encoding = THREE.LinearEncoding;
+	const snow3Color= textureLoader.load('js/textures/Snow3/Snow003_4K-JPG_Color.jpg');
+	const snow5Color= textureLoader.load('js/textures/Snow5/Snow005_4K-JPG_Color.jpg');
 
 	snowColor.wrapS = snowColor.wrapT = THREE.RepeatWrapping;
 	snow2Color.wrapS = snow2Color.wrapT = THREE.RepeatWrapping;
@@ -119,17 +142,27 @@ export function initMountain() {
 		rockTex: { value: rockColor },
 		snowTex: { value: snowColor },
 		snow2Tex: { value: snow2Color },
-		snowAOTex: { value: snowAO },
 		grassTex: { value: grassColor },
 		sandrockTex: { value: sandrockColor },
+		snow3Tex: {value: snow3Color },
+		snow5Tex: {value: snow5Color },
+
+		snowAOTex: { value: snowAO },
+		snow2AOTex: { value: snow2AO },
+
 		snowNormalTex: { value: snowNormal },
 		grassNormalTex: { value: grassNormal },
+		sandrockNormalTex: { value: sandrockNormal },
+
 		snowRoughTex: { value: snowRough },
 		grassRoughTex: { value: grassRough },
+		sandrockRoughTex: { value: sandrockRough },
+
 		snowDispTex: { value: snowDisp },
 		grassDispTex: { value: grassDisp },
+		sandrockDispTex: { value: sandrockDisp },
 
-		snowRepeat: { value: new THREE.Vector2(30,25) },
+		snowRepeat: { value: new THREE.Vector2(30,50) },
 		snowAORepeat: { value: new THREE.Vector2(20,30) },
 		rockRepeat: { value: new THREE.Vector2(20,20) },
 		sandrockRepeat: { value: new THREE.Vector2(20,20) },
@@ -142,35 +175,35 @@ export function initMountain() {
 	    varying float vHeight;
 	    out vec3 vPosition;
 	    out vec2 vUv;
-	    uniform float displacementScale;
-	    uniform sampler2D rockDispTex;
-		uniform sampler2D snowDispTex;
-		uniform sampler2D snowAODispTex;
+	    // uniform float displacementScale;
+	    // uniform sampler2D rockDispTex;
+		// uniform sampler2D snowDispTex;
+		// uniform sampler2D snowAODispTex;
 	    void main() {
-		vUv = uv;
+		// vUv = uv;
 
-		float rockDisp = texture2D(rockDispTex, uv).r;
-		float snowDisp = texture2D(snowDispTex, uv).r;
-		float snowAODisp = texture2D(snowAODispTex, uv).r;
+		// float rockDisp = texture2D(rockDispTex, uv).r;
+		// float snowDisp = texture2D(snowDispTex, uv).r;
+		// float snowAODisp = texture2D(snowAODispTex, uv).r;
 
-		// Blend them based on height
-		float heightBlend1 = smoothstep(0.0, 2.0, position.z);
-		float heightBlend2 = smoothstep(6.0, 12.0, position.z);
+		// // Blend them based on height
+		// float heightBlend1 = smoothstep(0.0, 2.0, position.z);
+		// float heightBlend2 = smoothstep(6.0, 12.0, position.z);
 
-		float totalDisp = mix(rockDisp, snowDisp, heightBlend1);
-		totalDisp = mix(totalDisp, snowAODisp, heightBlend2);
+		// float totalDisp = mix(rockDisp, snowDisp, heightBlend1);
+		// totalDisp = mix(totalDisp, snowAODisp, heightBlend2);
 
-		vec3 displacedPosition = position + normal * totalDisp * displacementScale;
+		// vec3 displacedPosition = position + normal * totalDisp * displacementScale;
 
-		vHeight = displacedPosition.z; // or y if Y is up
-		vPosition = displacedPosition;
+		// vHeight = displacedPosition.z; // or y if Y is up
+		// vPosition = displacedPosition;
 
-		gl_Position = projectionMatrix * modelViewMatrix * vec4(displacedPosition, 1.0);
+		// gl_Position = projectionMatrix * modelViewMatrix * vec4(displacedPosition, 1.0);
 
-	      // vPosition = position;
-	      // vUv = uv;
-	      // vHeight = position.z;
-	      // gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+	      vPosition = position;
+	      vUv = uv;
+	      vHeight = position.z;
+	      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
 	    }
 	  `,
 	  fragmentShader: `
@@ -179,18 +212,27 @@ export function initMountain() {
 	    uniform sampler2D snowTex;
 	    uniform sampler2D snow2Tex;
 	    uniform sampler2D snowAOTex;
+	    uniform sampler2D snow2AOTex;
 	    uniform sampler2D grassTex;
+	    uniform sampler2D snow3Tex;
+	    uniform sampler2D snow5Tex;
 	    uniform vec2 rockRepeat;
 	    uniform vec2 sandrockRepeat;
 	    uniform vec2 snowRepeat;
 	    uniform vec2 snowAORepeat;
 	    uniform vec2 grassRepeat;
 	    uniform sampler2D snowNormalTex;
+	    uniform sampler2D snow2NormalTex;
 	    uniform sampler2D grassNormalTex;
+	    uniform sampler2D sandrockNormalTex;
 	    uniform sampler2D snowRoughTex;
+	    uniform sampler2D snow2RoughTex;
 	    uniform sampler2D grassRoughTex;
+	    uniform sampler2D sandrockRoughTex;
 	    uniform sampler2D snowDispTex;
+	    uniform sampler2D snow2DispTex;
 	    uniform sampler2D grassDispTex;
+	    uniform sampler2D sandrockDispTex;
 	    uniform float time;
 
 	    varying float vHeight;
@@ -201,14 +243,38 @@ export function initMountain() {
 	      float blend1 = smoothstep(0.0, 2.0, vHeight);
 	      float blend2 = smoothstep(6.0, 12.0, vHeight);
 
-	      vec3 snowC = texture2D(snow2Tex, vUv * snowRepeat).rgb;
+	      vec3 snowC = texture2D(snowTex, vUv * snowRepeat).rgb;
+	      vec3 snow2C = texture2D(snow2Tex, vUv * snowRepeat).rgb;
+	      vec3 snow3C = texture2D(snow3Tex, vUv * snowRepeat).rgb;
+	      vec3 snow5C = texture2D(snow5Tex, vUv * snowRepeat).rgb;
 	      vec3 snowAOC = texture2D(snowAOTex, vUv * snowAORepeat).rgb;
+	      vec3 snow2AOC = texture2D(snow2AOTex, vUv * snowAORepeat).rgb;
 	      vec3 sandrockC = texture2D(sandrockTex, vUv * sandrockRepeat).rgb;
 
-	      vec3 color = mix(sandrockC,snowC,blend1);
-	      vec3 baseColor = mix(color,snowAOC,blend2);
+		//Normal, Roughness, Ambient Occlusion
+	      vec3 lightDir = normalize(vec3(1.0,1.0,1.0));
+	      vec3 snowN = texture2D(snowNormalTex, vUv * snowRepeat).rgb;
+	      vec3 snow2N = texture2D(snow2NormalTex, vUv * snowRepeat).rgb;
+	      vec3 sandrockN = texture2D(sandrockNormalTex, vUv * sandrockRepeat).rgb;
+	      vec3 snowNNorm = normalize(snowN * 2.0 - 1.0);
+	      vec3 snow2NNorm = normalize(snow2N * 2.0 - 1.0);
+	      vec3 sandrockNNorm = normalize(sandrockN * 2.0 - 1.0);
+	      float snowR = texture2D(snowRoughTex, vUv * snowRepeat).r;
+	      float snow2R = texture2D(snow2RoughTex, vUv * snowRepeat).r;
+	      float sandrockR = texture2D(sandrockRoughTex, vUv * sandrockRepeat).r;
+	      float snowA = texture2D(snowAOTex, vUv * snowRepeat).r;
+	      float snow2A = texture2D(snow2AOTex, vUv * snowRepeat).r;
+	      float snowDiff = max(dot(snowNNorm, lightDir), 0.0);
+	      float snow2Diff = max(dot(snow2NNorm, lightDir), 0.0);
+	      float sandrockDiff = max(dot(sandrockNNorm, lightDir), 0.0);
+	      vec3 finalSnowC = snowC * snowDiff * snowA;
+	      vec3 finalSnow2C = snow2C * snow2Diff * snow2A;
+	      vec3 finalSandrockC = sandrockC * sandrockDiff;
 
-	      gl_FragColor = vec4(baseColor, 1.0);
+	      vec3 baseColor = mix(sandrockC,snowAOC,blend1);
+	      vec3 allColor = mix(baseColor,snowAOC,blend2);
+
+	      gl_FragColor = vec4(allColor, 1.0);
 	    }
 	  `,
 	});
@@ -277,11 +343,11 @@ export function initMountain() {
 
 	//Pivoting and camera movement
 	const cameraStates = [
-	  { pivot: new THREE.Vector3(-1, 8, -10), offset: new THREE.Vector3(10, 5, 30) }, // section 1
-	  { pivot: new THREE.Vector3(-1, 8, -10), offset: new THREE.Vector3(35, 5, 5) }, // section 2
-	  { pivot: new THREE.Vector3(-1, 8, -10), offset: new THREE.Vector3(25, 8, -30) }, // section 3
-	  { pivot: new THREE.Vector3(-1, 8, -10), offset: new THREE.Vector3(-15, 10, 25) }, // section 3
-	  { pivot: new THREE.Vector3(-1, 8, -10), offset: new THREE.Vector3(0, 15, 35) }, // section 4
+	  { pivot: new THREE.Vector3(-1, 8, -10), offset: new THREE.Vector3(0, 12, 30) }, // section 4
+	  { pivot: new THREE.Vector3(-1, 8, -10), offset: new THREE.Vector3(30, 5, 10) }, // section 1
+	  { pivot: new THREE.Vector3(-1, 8, -10), offset: new THREE.Vector3(20, 5, -25) }, // section 2
+	  { pivot: new THREE.Vector3(-1, 8, -10), offset: new THREE.Vector3(-5, 8, -35) }, // section 2
+	  { pivot: new THREE.Vector3(-1, 8, -10), offset: new THREE.Vector3(-30, 5, 5) }, // section 4
 	];
 
 	let currentSection = 0;
