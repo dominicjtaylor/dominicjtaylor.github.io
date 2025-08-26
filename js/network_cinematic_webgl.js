@@ -9,7 +9,8 @@ const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 200);
 const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setClearColor("#CFE6FA", 0.3);
+// renderer.setClearColor("#CFE6FA", 0.3);
+renderer.setClearColor("#1C1C1F", 0.1);
 document.getElementById("webgl-container").appendChild(renderer.domElement);
 
 const horizontalScroll = document.getElementById("horizontal-scroll");
@@ -59,19 +60,19 @@ panels.forEach(panel => {
 
     // Move and shrink WebGL canvas
     const webgl = document.getElementById("webgl-container");
-    webgl.style.top = `${-fraction * 70}vh`; // move up to top 30%
-    webgl.style.height = `${100 - fraction * 70}vh`; // shrink to 30%
+    webgl.style.top = `${-fraction * 0}vh`; // move up to top 30%
+    webgl.style.height = `${100 - fraction * 0}vh`; // shrink to 30%
     webgl.style.opacity = `${1 - fraction}`; // fade out
 
     // Fade content in
     if (content) {
-      if (fraction > 0.05) content.classList.add('visible');
+      if (fraction > 0.1) content.classList.add('visible');
       else content.classList.remove('visible');
     }
 
 // Fade in background color
-    const opacity = Math.min(0.9, scrollFraction); // max opacity 0.9
-    wrapper.style.backgroundColor = `rgba(207, 230, 250, ${opacity})`;
+    const opacity = Math.min(1, scrollFraction); // max opacity 0.9
+    wrapper.style.backgroundColor = `rgba(28, 28, 31, ${opacity})`;
 
   });
 });
@@ -82,7 +83,7 @@ container.appendChild(renderer.domElement); //append to the container
 // Postprocessing (Bloom)
 const composer = new EffectComposer(renderer);
 composer.addPass(new RenderPass(scene, camera));
-const bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 0.4, 0.8, 0.8);
+const bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 0.8, 0.3, 0.8);
 composer.addPass(bloomPass);
 
 // --- Network Globe ---
@@ -222,7 +223,7 @@ const cameraStates = [
   { pivot: new THREE.Vector3(0, 0, 0), offset: new THREE.Vector3(0, 20, 40) }, // section 4
   { pivot: new THREE.Vector3(0, 0, 0), offset: new THREE.Vector3(5, 15, 10), subduedParticles: true }, // section 4
   { pivot: new THREE.Vector3(0, 0, 0), offset: new THREE.Vector3(20, 10, -40) }, // section 2
-  { pivot: new THREE.Vector3(-42, 0, -10), offset: new THREE.Vector3(45, 10, -65) }, // section 2
+  { pivot: new THREE.Vector3(-39, 0, -10), offset: new THREE.Vector3(45, 10, -65) }, // section 2
 ];
 let currentSection = 0;
 
