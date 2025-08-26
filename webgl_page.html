@@ -76,10 +76,27 @@
 /* Header fills first 100vh */
 .panel-header {
   min-height: 100vh;
+  <!-- display: flex; -->
+  <!-- justify-content: center; -->
+  <!-- align-items: center; -->
+  color: #fff;
+
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  height: 0;
+}
+
+.panel-header-inner {
+  color: #fff;
+  height: 100vh;          /* full viewport, so <h1> starts centered */
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #fff;
+}
+
+.panel-header h1 {
+	margin: 0;
 }
 
 /* Content initially invisible */
@@ -87,7 +104,7 @@
   max-width: 800px;
   margin: 2rem auto;
   font-size: 1rem;
-  color: white;
+  color: #fff;
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.8s ease-out, transform 0.8s ease-out;
@@ -95,8 +112,10 @@
 
 /* Wrap the panel content */
 .panel-content-wrapper {
+	padding-top: 80vh;
   max-width: 800px;
   margin: 0 auto;
+  color: black;
   padding: 0.5rem 2rem;
   background: rgba(207, 230, 250, 0);
   border-radius: 12px;
@@ -128,10 +147,17 @@
     <div class="panel-wrapper">
       <section class="panel" id="section1">
 		<div class="panel-header">
+			<div class="panel-header-inner">
 			<h1>Home</h1>
+			</div>
 		</div>
 		<div class="panel-content-wrapper">
 		<div class="panel-content">
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Scroll down for more content.</p>
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Scroll down for more content.</p>
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Scroll down for more content.</p>
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Scroll down for more content.</p>
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Scroll down for more content.</p>
 			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Scroll down for more content.</p>
 			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Scroll down for more content.</p>
 			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Scroll down for more content.</p>
@@ -154,7 +180,9 @@
       </section>
       <section class="panel" id="section2">
 		<div class="panel-header">
+			<div class="panel-header-inner">
 			<h1>About</h1>
+			</div>
 		</div>
 		<div class="panel-content">
 			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Scroll down for more content.</p>
@@ -162,7 +190,9 @@
       </section>
       <section class="panel" id="section3">
 		<div class="panel-header">
+			<div class="panel-header-inner">
 			<h1>Work</h1>
+			</div>
 		</div>
 		<div class="panel-content">
 			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Scroll down for more content.</p>
@@ -170,7 +200,9 @@
       </section>
       <section class="panel" id="section4">
 		<div class="panel-header">
+			<div class="panel-header-inner">
 			<h1>Projects</h1>
+			</div>
 		</div>
 		<div class="panel-content">
 			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Scroll down for more content.</p>
@@ -178,7 +210,9 @@
       </section>
       <section class="panel" id="section5">
 		<div class="panel-header">
+			<div class="panel-header-inner">
 			<h1>Contact</h1>
+			</div>
 		</div>
 		<div class="panel-content">
 			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Scroll down for more content.</p>

@@ -30,7 +30,7 @@ panels.forEach(panel => {
       horizontalScroll.style.overflowX = "scroll"; // enable horizontal
     }
     const scrollFraction = panel.scrollTop / (panel.scrollHeight - panel.clientHeight);
-    verticalOffset = scrollFraction * 40; // tweak 20 to control how much the camera moves
+    verticalOffset = scrollFraction * 300; // tweak 20 to control how much the camera moves
   });
 });
 
@@ -45,7 +45,8 @@ horizontalScroll.addEventListener('scroll', () => {
 
 //Move the webgl container up when scrolling down to content
 panels.forEach(panel => {
-  const header = panel.querySelector('.panel-header');
+  const header = panel.querySelector('.panel-header-inner');
+  const headerInner = panel.querySelector('.panel-header-inner');
   const content = panel.querySelector('.panel-content');
 	const wrapper = panel.querySelector('.panel-content-wrapper');
 
@@ -61,8 +62,9 @@ panels.forEach(panel => {
     // Move and shrink WebGL canvas
     const webgl = document.getElementById("webgl-container");
     webgl.style.top = `${-fraction * 0}vh`; // move up to top 30%
-    webgl.style.height = `${100 - fraction * 0}vh`; // shrink to 30%
+    // webgl.style.height = `${100 - fraction * 0}vh`; // shrink to 30%
     webgl.style.opacity = `${1 - fraction}`; // fade out
+	  headerInner.style.height = `${100-fraction * 85}vh`;
 
     // Fade content in
     if (content) {
@@ -72,7 +74,7 @@ panels.forEach(panel => {
 
 // Fade in background color
     const opacity = Math.min(1, scrollFraction); // max opacity 0.9
-    wrapper.style.backgroundColor = `rgba(28, 28, 31, ${opacity})`;
+    wrapper.style.backgroundColor = `rgba(40, 40, 40, ${opacity})`;
 
   });
 });
