@@ -9,8 +9,9 @@ const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 200);
 const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
-// renderer.setClearColor("#CFE6FA", 0.3);
-renderer.setClearColor("#1C1C1F", 0.1);
+// renderer.setClearColor("#CFE6FA", 0.1);
+renderer.setClearColor("#1C1C1F", 0.5);
+// renderer.setClearColor("#FFF", 0.4);
 document.getElementById("webgl-container").appendChild(renderer.domElement);
 
 const horizontalScroll = document.getElementById("horizontal-scroll");
@@ -46,9 +47,7 @@ horizontalScroll.addEventListener('scroll', () => {
 //Move the webgl container up when scrolling down to content
 panels.forEach(panel => {
   const header = panel.querySelector('.panel-header-inner');
-  const headerInner = panel.querySelector('.panel-header-inner');
   const content = panel.querySelector('.panel-content');
-	const wrapper = panel.querySelector('.panel-content-wrapper');
 
   panel.addEventListener('scroll', () => {
     const scrollTop = panel.scrollTop;
@@ -57,24 +56,21 @@ panels.forEach(panel => {
 	const scrollFraction = Math.min(scrollTop / maxScroll, 1);
 
     // Fraction scrolled past header
-    const fraction = Math.min(scrollTop / headerHeight, 1);
+	  const fadeDistance = headerHeight * 0.5;
+    const fraction = Math.min(scrollTop / fadeDistance, 1);
 
     // Move and shrink WebGL canvas
     const webgl = document.getElementById("webgl-container");
-    webgl.style.top = `${-fraction * 0}vh`; // move up to top 30%
+    // webgl.style.top = `${-fraction * 0}vh`; // move up to top 30%
     // webgl.style.height = `${100 - fraction * 0}vh`; // shrink to 30%
     webgl.style.opacity = `${1 - fraction}`; // fade out
-	  headerInner.style.height = `${100-fraction * 85}vh`;
+	  // header.style.opacity = `${1 - fraction}`;
 
     // Fade content in
-    if (content) {
-      if (fraction > 0.1) content.classList.add('visible');
-      else content.classList.remove('visible');
-    }
-
-// Fade in background color
-    const opacity = Math.min(1, scrollFraction); // max opacity 0.9
-    wrapper.style.backgroundColor = `rgba(40, 40, 40, ${opacity})`;
+    // if (content) {
+    //   if (fraction > 0.1) content.classList.add('visible');
+    //   else content.classList.remove('visible');
+    // }
 
   });
 });
@@ -85,7 +81,7 @@ container.appendChild(renderer.domElement); //append to the container
 // Postprocessing (Bloom)
 const composer = new EffectComposer(renderer);
 composer.addPass(new RenderPass(scene, camera));
-const bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 0.8, 0.3, 0.8);
+const bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 0.8, 0.3, 0.65);
 composer.addPass(bloomPass);
 
 // --- Network Globe ---
@@ -163,9 +159,9 @@ for (let c = 0; c < numClusters; c++) {
 // Edges + particle flow
 const edges = new THREE.Group();
 const edgeMaterial = new THREE.LineBasicMaterial({
-  color: 0x88bbff,
   transparent: true,
-  opacity: 0.2
+  opacity: 0.2,
+  color: 0x88bbff,
 });
 
 const lineCount = Math.floor(nodes.length * 0.05); // 5% of nodes create edges
@@ -177,7 +173,7 @@ for (let i = 0; i < lineCount; i++) {
 	const line = new THREE.Line(geom, edgeMaterial);
   edges.add(line);
 
-    const particleGeom = new THREE.SphereGeometry(0.08, 10, 10);
+    const particleGeom = new THREE.SphereGeometry(0.1, 10, 10);
     const particleMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
     const particle = new THREE.Mesh(particleGeom, particleMat);
     line.userData = {
@@ -205,25 +201,25 @@ scene.add(globe);
 const cloudTexture = new THREE.TextureLoader().load('js/textures/Cloud/31.png');
 const cloudMaterial = new THREE.MeshLambertMaterial({ map: cloudTexture, transparent: true, opacity: 0.2, depthWrite: false, side: THREE.DoubleSide });
 const clouds = [];
-for (let i = 0; i < 30; i++) {
-  const cloudGeo = new THREE.PlaneGeometry(60, 40);
+for (let i = 0; i < 40; i++) {
+  const cloudGeo = new THREE.PlaneGeometry(70, 50);
   const cloud = new THREE.Mesh(cloudGeo, cloudMaterial);
-  cloud.position.set((Math.random() - 0.5) * 200, (Math.random() - 0.5) * 100, (Math.random() - 0.5) * 200);
+  cloud.position.set((Math.random() - 0.5) * 300, (Math.random() - 0.5) * 100, (Math.random() - 0.5) * 200);
   scene.add(cloud);
   clouds.push(cloud);
 }
 
 // --- Lighting ---
-scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+scene.add(new THREE.AmbientLight(0xffffff, 0.9));
 const dirLight = new THREE.DirectionalLight(0xffffff, 1.5);
 dirLight.position.set(50, 100, 100);
 scene.add(dirLight);
 
 // --- Camera States ---
 const cameraStates = [
-  { pivot: new THREE.Vector3(0, 0, 0), offset: new THREE.Vector3(-10, 15, -80) }, // section 2
+  { pivot: new THREE.Vector3(0, 0, 0), offset: new THREE.Vector3(-10, 15, -100) }, // section 2
   { pivot: new THREE.Vector3(0, 0, 0), offset: new THREE.Vector3(0, 20, 40) }, // section 4
-  { pivot: new THREE.Vector3(0, 0, 0), offset: new THREE.Vector3(5, 15, 10), subduedParticles: true }, // section 4
+  { pivot: new THREE.Vector3(0, 0, 0), offset: new THREE.Vector3(5, 15, 10), subdued: true }, // section 4
   { pivot: new THREE.Vector3(0, 0, 0), offset: new THREE.Vector3(20, 10, -40) }, // section 2
   { pivot: new THREE.Vector3(-39, 0, -10), offset: new THREE.Vector3(45, 10, -65) }, // section 2
 ];
@@ -233,6 +229,7 @@ window.addEventListener('scroll', () => {
   const sectionIndex = Math.round(window.scrollY / window.innerHeight);
   currentSection = Math.min(cameraStates.length - 1, Math.max(0, sectionIndex));
 });
+
 
 // --- Animation Loop ---
 const clock = new THREE.Clock();
@@ -259,8 +256,9 @@ camera.position.lerp(desiredPos, 0.05);
 
 // Determine particle speed & opacity for current section
   const state = cameraStates[Math.floor(currentSection)];
-  const particleSpeed = state.subduedParticles ? 0.01 : 0.05;
-  const particleOpacity = state.subduedParticles ? 0.001 : 0.05;
+  const particleSpeed = state.subdued ? 0.01 : 0.05;
+  const particleOpacity = state.subdued ? 0.001 : 0.05;
+  // const lineOpacity = state.subdued ? 0.1 : 0.3;
 
   // Animate edge particles
   globe.userData.edges.children.forEach(line => {
@@ -268,6 +266,7 @@ camera.position.lerp(desiredPos, 0.05);
     line.userData.progress = (line.userData.progress + delta * particleSpeed) % 1;
     particle.position.lerpVectors(a, b, line.userData.progress);
     particle.material.opacity = particleOpacity;
+	  // line.material.opacity = lineOpacity;
   });
 
   // Billboarding clouds

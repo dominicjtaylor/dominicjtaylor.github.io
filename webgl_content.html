@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Horizontal Scroll WebGL</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    /* Horizontal scroll container */
+    #horizontal-scroll {
+      width: 100vw;
+      height: 100vh;
+      overflow-x: scroll;
+      overflow-y: hidden;
+      scroll-snap-type: x mandatory;
+      display: flex;
+      scroll-behavior: smooth;
+    }
+
+    /* Wrapper for panels */
+    .panel-wrapper {
+      display: flex;
+      width: 500vw; /* 5 sections */
+      height: 100vh;
+    }
+
+/* WebGL canvas always at top, occupying 30% of viewport height after scroll */
+#webgl-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh; /* full initially */
+  z-index: -1;
+  pointer-events: none; /* don’t block scrolling */
+  transition: opacity 0.5s ease, top 0.5s ease, height 0.5s ease;
+}
+
+/* Overlay iframe for no-sidebar.html */
+#overlay-frame {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.8s ease;
+  border: none;
+  overflow-y: auto;
+}
+
+/* Panels scroll vertically */
+.panel {
+  width: 100vw;
+  min-height: 100vh; /* ensures full section height */
+  scroll-snap-align: start;
+  display: block;
+  overflow-y: auto;
+  font-family: 'Inter', sans-serif;
+  font-size: 2rem;
+  scrollbar-width: none;          /* Firefox */
+  -ms-overflow-style: none;
+<!-- background-color: #CFE6FA; -->
+}
+
+.panel::-webkit-scrollbar {
+  display: none;                  /* Chrome/Safari/Edge */
+}
+
+/* Header fills first 100vh */
+.panel-header {
+  min-height: 100vh;
+  color: #fff;
+
+  position: sticky;
+  z-index: 5;
+  height: 100dvh;
+  top: 0;
+}
+
+.panel-header-inner {
+	position: absolute;
+	left: 0;
+	width: 100%;
+	top: 50%;
+	transform: translateY(-50%);
+	z-index: 10;
+	pointer-events: none;
+	font-size: 2vw;
+
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  <!-- height: 100dvh;          /* full viewport, so <h1> starts centered */ -->
+}
+
+.panel-header h1 {
+	margin: 0;
+}
+
+.panel-header-inner.visible {
+	opacity: 0;
+	transform: translateY(0);
+}
+
+/* Content initially invisible */
+.panel-content {
+  max-width: 900px;
+  margin: 3.5rem auto;
+  font-size: 1rem;
+  color: #fff;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  overflow-y: auto;
+}
+
+.panel-content.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* optional: fade WebGL slightly */
+#webgl-container.fade {
+  opacity: 0.3;
+  transition: opacity 0.8s ease-out;
+}
+
+.scroll-right {
+  position: fixed;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 30px;        /* length of the shaft */
+  height: 3px;        /* thickness of the shaft */
+  /*background: rgba(180,180,180,1); /* shaft color */
+  background: linear-gradient(to right,
+              rgba(150,150,150,0),   /* faded start */
+              rgba(150,150,150,1));
+  z-index: 9999;
+  pointer-events: none;
+}
+
+.scroll-left {
+  position: fixed;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 30px;        /* length of the shaft */
+  height: 3px;        /* thickness of the shaft */
+  /*background: rgba(180,180,180,1); /* shaft color */
+  background: linear-gradient(to left,
+              rgba(150,150,150,0),   /* faded start */
+              rgba(150,150,150,1));
+  z-index: 9999;
+  pointer-events: none;
+}
+
+.scroll-down {
+  position: fixed;
+  left: 50%;
+  bottom: 30px;
+  transform: translateX(-50%) rotate(90deg);;
+  width: 30px;        /* length of the shaft */
+  height: 3px;        /* thickness of the shaft */
+  /*background: rgba(180,180,180,1); /* shaft color */
+  background: linear-gradient(to right,
+              rgba(150,150,150,0),   /* faded start */
+              rgba(150,150,150,1));
+  z-index: 9999;
+  pointer-events: none;
+}
+
+/* Arrowhead */
+.scroll-right::before,
+.scroll-right::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  width: 12px;       /* length of diagonal lines */
+  height: 3px;       /* same thickness */
+  background: rgba(150,150,150,1);
+  transform-origin: right center;
+}
+
+.scroll-left::before,
+.scroll-left::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 12px;       /* length of diagonal lines */
+  height: 3px;       /* same thickness */
+  background: rgba(150,150,150,1);
+  transform-origin: left center;
+}
+
+.scroll-down::before,
+.scroll-down::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  width: 12px;       /* length of diagonal lines */
+  height: 3px;       /* same thickness */
+  background: rgba(150,150,150,1);
+  transform-origin: right center;
+}
+
+.scroll-right::before {
+  transform: translateY(-70%) rotate(-45deg); /* upper diagonal */
+}
+.scroll-right::after {
+  transform: translateY(-20%) rotate(45deg); /* lower diagonal */
+}
+.scroll-left::before {
+  transform: translateY(-20%) rotate(-45deg); /* upper diagonal */
+}
+.scroll-left::after {
+  transform: translateY(-70%) rotate(45deg); /* lower diagonal */
+}
+.scroll-down::before {
+  transform: translateY(-60%) rotate(-45deg); /* upper diagonal */
+}
+.scroll-down::after {
+  transform: translateY(-40%) rotate(45deg); /* lower diagonal */
+}
+
+.no-sidebar-container {
+  width: 100%;
+  background: rgba(10, 10, 10, 0.1) !important;
+  color: white;
+}
+
+.no-sidebar-container h2 {
+  font-size: 2rem;
+  text-align: center;
+}
+
+  </style>
+</head>
+<body>
+
+  <!-- WebGL canvas container -->
+  <div id="webgl-container"></div>
+
+  <!-- Overlay iframe -->
+  <!-- <iframe id="overlay" src="no-sidebar.html"></iframe> -->
+  <!-- <div id="overlay"></div> -->
+<div id="overlay-container">
+  <iframe id="overlay-frame" style="opacity:0; pointer-events:none;"></iframe>
+</div>
+
+  <!-- Horizontal scrolling sections -->
+  <div id="horizontal-scroll">
+    <div class="panel-wrapper">
+      <section class="panel" id="section1">
+		<div class="panel-header">
+			<div class="panel-header-inner">
+			<h1>Home</h1>
+			</div>
+		</div>
+		<div class="panel-content">
+			<!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Scroll down for more content.</p> -->
+			<!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Scroll down for more content.</p> -->
+		</div>
+      </section>
+      <section class="panel" id="section2">
+		<div class="panel-header">
+			<div class="panel-header-inner">
+			<h1>About</h1>
+			</div>
+		</div>
+		<div class="panel-content">
+			<!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Scroll down for more content.</p> -->
+		</div>
+      </section>
+      <section class="panel" id="section3">
+		<div class="panel-header">
+			<div class="panel-header-inner">
+			<h1>Work</h1>
+			</div>
+		</div>
+		<div class="panel-content">
+			<!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Scroll down for more content.</p> -->
+		</div>
+      </section>
+      <section class="panel" id="section4">
+		<div class="panel-header">
+			<div class="panel-header-inner">
+			<h1>Projects</h1>
+			</div>
+		</div>
+		<div class="panel-content">
+			<!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Scroll down for more content.</p> -->
+		</div>
+      </section>
+      <section class="panel" id="section5">
+		<div class="panel-header">
+			<div class="panel-header-inner">
+			<h1>Contact</h1>
+			</div>
+		</div>
+		<div class="panel-content">
+			<!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Scroll down for more content.</p> -->
+		</div>
+      </section>
+    </div>
+  </div>
+<!-- <div class="scroll-hint scroll-left">←</div> -->
+<!-- <div class="scroll-hint scroll-right">→</div> -->
+<!-- <div class="scroll-hint scroll-down">↓</div> -->
+<!-- <div class="scroll-hint scroll-left">⇠</div> -->
+<!-- <div class="scroll-hint scroll-right">⇢</div> -->
+<!-- <div class="scroll-hint scroll-down">⇣</div> -->
+<div class="scroll-right"></div>
+<div class="scroll-left"></div>
+<div class="scroll-down"></div>
+
+  <!-- JS -->
+  <script type="module" src="js/network_cinematic_webgl.js"></script>
+  <!-- <script type="module" src="script.js?v=<?php echo time(); ?>"></script> -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+<script>
+const sectionHTML = {
+  'section1': 'webgl_home.html',
+  'section2': 'webgl_about.html',
+  'section3': 'webgl_work.html',
+  'section4': 'webgl_projects.html',
+  'section5': 'webgl_contact.html'
+};
+
+// Keep track of loaded sections
+const loadedSections = new Set();
+
+document.querySelectorAll('.panel').forEach(panel => {
+  const content = panel.querySelector('.panel-content');
+  const sectionId = panel.id;
+
+  panel.addEventListener('scroll', async () => {
+    // Fade out header as user scrolls
+    const headerInner = panel.querySelector('.panel-header-inner');
+    <!-- const fraction = Math.min(scrollTop / fadeDistance, 1); -->
+    const scrollFraction = panel.scrollTop * 5 / (panel.scrollHeight - panel.clientHeight);
+    headerInner.style.opacity = `${1 - scrollFraction}`;
+
+    // Load the external HTML if not already loaded and scrolled a little
+    if (!loadedSections.has(sectionId) && panel.scrollTop > 50) {
+      try {
+        const response = await fetch(sectionHTML[sectionId]);
+        const html = await response.text();
+	const parser = new DOMParser();
+	const doc = parser.parseFromString(html,"text/html");
+	const bodyContent = doc.body.innerHTML;
+
+	content.innerHTML = `<div class="no-sidebar-container">${bodyContent}</div>`;
+	loadedSections.add(sectionId);
+
+        <!-- content.innerHTML = html; -->
+        <!-- // Mark as loaded -->
+        <!-- loadedSections.add(sectionId); -->
+
+        // Fade in content
+        content.style.opacity = 0;
+        content.style.transition = 'opacity 0.8s ease-out';
+        requestAnimationFrame(() => {
+          content.style.opacity = 1;
+        });
+      } catch (err) {
+        console.error(`Failed to load ${sectionHTML[sectionId]}:`, err);
+      }
+    }
+  });
+});
+</script>
+
+</body>
+</html>
+

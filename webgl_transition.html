@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Horizontal Scroll WebGL</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    /* Horizontal scroll container */
+    #horizontal-scroll {
+      width: 100vw;
+      height: 100vh;
+      overflow-x: scroll;
+      overflow-y: hidden;
+      scroll-snap-type: x mandatory;
+      display: flex;
+      scroll-behavior: smooth;
+    }
+
+    /* Wrapper for panels */
+    .panel-wrapper {
+      display: flex;
+      width: 500vw; /* 5 sections */
+      height: 100vh;
+    }
+
+/* WebGL canvas always at top, occupying 30% of viewport height after scroll */
+#webgl-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh; /* full initially */
+  z-index: -1;
+  pointer-events: none; /* don’t block scrolling */
+  transition: opacity 0.5s ease, top 0.5s ease, height 0.5s ease;
+}
+
+/* Overlay iframe for no-sidebar.html */
+#overlay-frame {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.8s ease;
+  border: none;
+  overflow-y: auto;
+}
+
+/* Panels scroll vertically */
+.panel {
+  width: 100vw;
+  min-height: 100vh; /* ensures full section height */
+  scroll-snap-align: start;
+  display: block;
+  overflow-y: auto;
+  font-family: 'Inter', sans-serif;
+  font-size: 2rem;
+  scrollbar-width: none;          /* Firefox */
+  -ms-overflow-style: none;
+<!-- background-color: #CFE6FA; -->
+}
+
+.panel::-webkit-scrollbar {
+  display: none;                  /* Chrome/Safari/Edge */
+}
+
+/* Header fills first 100vh */
+.panel-header {
+  min-height: 100vh;
+  color: #fff;
+
+  position: sticky;
+  z-index: 5;
+  height: 100dvh;
+  top: 0;
+}
+
+.panel-header-inner {
+	position: absolute;
+	left: 0;
+	width: 100%;
+	top: 50%;
+	transform: translateY(-50%);
+	z-index: 10;
+	pointer-events: none;
+	font-size: 2vw;
+
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  <!-- height: 100dvh;          /* full viewport, so <h1> starts centered */ -->
+}
+
+.panel-header h1 {
+	margin: 0;
+}
+
+.panel-header-inner.visible {
+	opacity: 0;
+	transform: translateY(0);
+}
+
+/* Content initially invisible */
+.panel-content {
+  max-width: 900px;
+  margin: 3.5rem auto;
+  font-size: 1rem;
+  color: #fff;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  overflow-y: auto;
+}
+
+.panel-content.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* optional: fade WebGL slightly */
+#webgl-container.fade {
+  opacity: 0.3;
+  transition: opacity 0.8s ease-out;
+}
+
+.scroll-hint {
+  position: fixed;
+  z-index: 9999;
+  font-size: 2rem;
+  color: #fff;
+  opacity: 0.5;
+  transition: opacity 0.8s ease; /* smooth fade */
+  pointer-events: none;
+}
+.scroll-left { left: 10px; top: 50%; transform: translateY(-50%); }
+.scroll-right { right: 10px; top: 50%; transform: translateY(-50%); }
+.scroll-down { bottom: 20px; left: 50%; transform: translateX(-50%); }
+
+  </style>
+</head>
+<body>
+
+  <!-- WebGL canvas container -->
+  <div id="webgl-container"></div>
+
+  <!-- Overlay iframe -->
+  <!-- <iframe id="overlay" src="no-sidebar.html"></iframe> -->
+  <!-- <div id="overlay"></div> -->
+<div id="overlay-container">
+  <iframe id="overlay-frame" style="opacity:0; pointer-events:none;"></iframe>
+</div>
+
+  <!-- Horizontal scrolling sections -->
+  <div id="horizontal-scroll">
+    <div class="panel-wrapper">
+      <section class="panel" id="section1">
+		<div class="panel-header">
+			<div class="panel-header-inner">
+			<h1>Home</h1>
+			</div>
+		</div>
+		<div class="panel-content">
+			<!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Scroll down for more content.</p> -->
+			<!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Scroll down for more content.</p> -->
+		</div>
+      </section>
+      <section class="panel" id="section2">
+		<div class="panel-header">
+			<div class="panel-header-inner">
+			<h1>About</h1>
+			</div>
+		</div>
+		<div class="panel-content">
+			<!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Scroll down for more content.</p> -->
+		</div>
+      </section>
+      <section class="panel" id="section3">
+		<div class="panel-header">
+			<div class="panel-header-inner">
+			<h1>Work</h1>
+			</div>
+		</div>
+		<div class="panel-content">
+			<!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Scroll down for more content.</p> -->
+		</div>
+      </section>
+      <section class="panel" id="section4">
+		<div class="panel-header">
+			<div class="panel-header-inner">
+			<h1>Projects</h1>
+			</div>
+		</div>
+		<div class="panel-content">
+			<!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Scroll down for more content.</p> -->
+		</div>
+      </section>
+      <section class="panel" id="section5">
+		<div class="panel-header">
+			<div class="panel-header-inner">
+			<h1>Contact</h1>
+			</div>
+		</div>
+		<div class="panel-content">
+			<!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Scroll down for more content.</p> -->
+		</div>
+      </section>
+    </div>
+  </div>
+<!-- <div class="scroll-hint scroll-left">←</div> -->
+<!-- <div class="scroll-hint scroll-right">→</div> -->
+<!-- <div class="scroll-hint scroll-down">↓</div> -->
+<div class="scroll-hint scroll-left">⇠</div>
+<div class="scroll-hint scroll-right">⇢</div>
+<div class="scroll-hint scroll-down">⇣</div>
+
+  <!-- JS -->
+  <script type="module" src="js/network_cinematic_webgl.js"></script>
+  <!-- <script type="module" src="script.js?v=<?php echo time(); ?>"></script> -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+<script>
+const overlayFrame = document.getElementById('overlay-frame');
+const webgl = document.getElementById('webgl-container');
+const panels = document.querySelectorAll('.panel');
+const headers = document.querySelectorAll('.panel-header-inner');
+
+const sectionHTML = {
+  'section1': 'no-sidebar.html',
+  'section2': 'about.html',
+  'section3': 'work.html',
+  'section4': 'projects.html',
+  'section5': 'contact.html'
+};
+
+panels.forEach(panel => {
+  panel.addEventListener('scroll', async () => {
+    const fraction = panel.scrollTop / (panel.scrollHeight - panel.clientHeight);
+    if (fraction > 0.4) {
+      // Fade in overlay, fade out WebGL
+      overlayFrame.style.opacity = 1;
+      webgl.style.opacity = 0;
+	    headers.forEach(h => h.style.opacity = 0);
+
+	// Load overlay HTML in iframe
+	overlayFrame.src = sectionHTML[panel.id]; 
+	overlayFrame.style.opacity = 1;
+	overlayFrame.style.pointerEvents = 'auto';
+
+    } else {
+	overlayFrame.style.opacity = 0;
+	overlayFrame.style.pointerEvents = 'none';
+	webgl.style.opacity = 1;
+	headers.forEach(h => h.style.opacity = 1);
+    }
+  });
+});
+</script>
+
+</body>
+</html>
+
