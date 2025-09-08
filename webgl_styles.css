@@ -1,0 +1,408 @@
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    /* Horizontal scroll container */
+    #horizontal-scroll {
+      width: 100vw;
+      height: 100vh;
+      overflow-x: scroll;
+      overflow-y: hidden;
+      scroll-snap-type: x mandatory;
+      display: flex;
+      scroll-behavior: smooth;
+    }
+
+    /* Wrapper for panels */
+    .panel-wrapper {
+      display: flex;
+      width: 500vw; /* 5 sections */
+      height: 100vh;
+    }
+
+/* WebGL canvas always at top, occupying 30% of viewport height after scroll */
+#webgl-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh; /* full initially */
+  z-index: -1;
+  pointer-events: none; /* don’t block scrolling */
+  transition: opacity 0.5s ease, top 0.5s ease, height 0.5s ease;
+}
+
+#header {
+  position: fixed;     /* stays put on the screen */
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;       /* sits above panels and WebGL */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5em 1em;
+  background: transparent; /* optional: remove background if you want floating text */
+  pointer-events: auto;     /* allow clicking links */
+}
+
+#header h1 {
+  margin: 0;
+  font-size: 1.5em;
+}
+
+#header nav {
+  position: relative;  /* now just inside header */
+  right: 1em;
+  top: 0;
+}
+
+#header nav ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#header nav ul li {
+  display: inline-block;
+  margin-left: 1em;
+}
+
+#header nav ul li a {
+  color: white;         /* override as needed */
+  text-decoration: none;
+  padding: 0.5em 0.8em;
+  transition: color 0.3s;
+}
+
+#header nav ul li a:hover {
+  color: #e44c65;
+}
+
+
+/* Overlay iframe for no-sidebar.html */
+#overlay-frame {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.8s ease;
+  border: none;
+  overflow-y: auto;
+}
+
+/* Panels scroll vertically */
+.panel {
+  width: 100vw;
+  min-height: 100vh; /* ensures full section height */
+  scroll-snap-align: start;
+  display: block;
+  overflow-y: auto;
+  font-family: 'Inter', sans-serif;
+  font-size: 2rem;
+  scrollbar-width: none;          /* Firefox */
+  -ms-overflow-style: none;
+<!-- background-color: #CFE6FA; -->
+}
+
+.panel::-webkit-scrollbar {
+  display: none;                  /* Chrome/Safari/Edge */
+}
+
+/* Header fills first 100vh */
+.panel-header {
+  min-height: 100vh;
+  color: #fff;
+
+  position: sticky;
+  z-index: 5;
+  height: 100dvh;
+  top: 0;
+}
+
+.panel-header-inner {
+	position: absolute;
+	left: 0;
+	width: 100%;
+	top: 50%;
+	transform: translateY(-50%);
+	z-index: 10;
+	pointer-events: none;
+	font-size: 2vw;
+
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  <!-- height: 100dvh;          /* full viewport, so <h1> starts centered */ -->
+}
+
+.panel-header h1 {
+	margin: 0;
+}
+
+.panel-header-inner.visible {
+	opacity: 0;
+	transform: translateY(0);
+}
+
+/* Content initially invisible */
+.panel-content {
+  max-width: 900px;
+  margin: 3.5rem auto;
+  font-size: 1rem;
+  color: #fff;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  overflow-y: auto;
+}
+
+.panel-content.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* optional: fade WebGL slightly */
+#webgl-container.fade {
+  opacity: 0.3;
+  transition: opacity 0.8s ease-out;
+}
+
+.scroll-right,
+.scroll-left,
+.scroll-down {
+  cursor: pointer;      /* makes it look clickable */
+  pointer-events: auto; /* ensure clicks register */
+}
+
+.scroll-right {
+  position: fixed;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 30px;        /* length of the shaft */
+  height: 4px;        /* thickness of the shaft */
+  /*background: rgba(180,180,180,1); /* shaft color */
+  background: linear-gradient(to right,
+              rgba(150,150,150,0),   /* faded start */
+              rgba(150,150,150,1));
+  z-index: 9999;
+  /* pointer-events: none; */
+}
+
+.scroll-left {
+  position: fixed;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 30px;        /* length of the shaft */
+  height: 4px;        /* thickness of the shaft */
+  /*background: rgba(180,180,180,1); /* shaft color */
+  background: linear-gradient(to left,
+              rgba(150,150,150,0),   /* faded start */
+              rgba(150,150,150,1));
+  z-index: 9999;
+  /* pointer-events: none; */
+}
+
+.scroll-down {
+  position: fixed;
+  left: 50%;
+  bottom: 30px;
+  transform: translateX(-50%) rotate(90deg);;
+  width: 30px;        /* length of the shaft */
+  height: 4px;        /* thickness of the shaft */
+  /*background: rgba(180,180,180,1); /* shaft color */
+  background: linear-gradient(to right,
+              rgba(150,150,150,0),   /* faded start */
+              rgba(150,150,150,1));
+  z-index: 9999;
+  /* pointer-events: none; */
+}
+
+/* Arrowhead */
+.scroll-right::before,
+.scroll-right::after {
+  content: '';
+  position: absolute;
+  right: -1px;
+  top: 50%;
+  width: 14px;       /* length of diagonal lines */
+  height: 5px;       /* same thickness */
+  background: rgba(150,150,150,1);
+  transform-origin: right center;
+}
+
+.scroll-left::before,
+.scroll-left::after {
+  content: '';
+  position: absolute;
+  left: -1px;
+  top: 50%;
+  width: 14px;       /* length of diagonal lines */
+  height: 5px;       /* same thickness */
+  background: rgba(150,150,150,1);
+  transform-origin: left center;
+}
+
+.scroll-down::before,
+.scroll-down::after {
+  content: '';
+  position: absolute;
+  right: -2px;
+  top: 50%;
+  width: 14px;       /* length of diagonal lines */
+  height: 5px;       /* same thickness */
+  background: rgba(150,150,150,1);
+  transform-origin: right center;
+}
+
+.scroll-right::before {
+  transform: translateY(-70%) rotate(-45deg); /* upper diagonal */
+}
+.scroll-right::after {
+  transform: translateY(-20%) rotate(45deg); /* lower diagonal */
+}
+.scroll-left::before {
+  transform: translateY(-20%) rotate(-45deg); /* upper diagonal */
+}
+.scroll-left::after {
+  transform: translateY(-70%) rotate(45deg); /* lower diagonal */
+}
+.scroll-down::before {
+  transform: translateY(-70%) rotate(-45deg); /* upper diagonal */
+}
+.scroll-down::after {
+  transform: translateY(-25%) rotate(45deg); /* lower diagonal */
+}
+
+.no-sidebar-container {
+  width: 100%;
+  background: rgba(10, 10, 10, 0.1) !important;
+  color: white;
+}
+
+.no-sidebar-container h2 {
+  font-size: 2rem;
+  text-align: center;
+}
+
+	input[type="submit"],
+	input[type="reset"],
+	input[type="button"],
+	.button {
+		-moz-appearance: none;
+		-webkit-appearance: none;
+		-ms-appearance: none;
+		appearance: none;
+		-moz-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+		-webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+		-ms-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+		transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+		background-color: transparent;
+		border-radius: 4px;
+		border: 0;
+		box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.3);
+		color: #ffffff !important;
+		cursor: pointer;
+		display: inline-block;
+		font-weight: 300;
+		height: 3em;
+		line-height: 3em;
+		padding: 0 2.25em;
+		text-align: center;
+		text-decoration: none;
+		white-space: nowrap;
+	}
+
+		input[type="submit"]:hover, input[type="submit"]:active,
+		input[type="reset"]:hover,
+		input[type="reset"]:active,
+		input[type="button"]:hover,
+		input[type="button"]:active,
+		.button:hover,
+		.button:active {
+			box-shadow: inset 0 0 0 1px #e44c65;
+			color: #e44c65 !important;
+		}
+
+		input[type="submit"]:active,
+		input[type="reset"]:active,
+		input[type="button"]:active,
+		.button:active {
+			background-color: rgba(228, 76, 101, 0.15);
+		}
+
+		input[type="submit"].icon:before,
+		input[type="reset"].icon:before,
+		input[type="button"].icon:before,
+		.button.icon:before {
+			margin-right: 0.5em;
+		}
+
+		input[type="submit"].fit,
+		input[type="reset"].fit,
+		input[type="button"].fit,
+		.button.fit {
+			width: 100%;
+		}
+
+		input[type="submit"].small,
+		input[type="reset"].small,
+		input[type="button"].small,
+		.button.small {
+			font-size: 0.8em;
+		}
+
+		input[type="submit"].large,
+		input[type="reset"].large,
+		input[type="button"].large,
+		.button.large {
+			font-size: 1.35em;
+		}
+
+		input[type="submit"].primary,
+		input[type="reset"].primary,
+		input[type="button"].primary,
+		.button.primary {
+			background-color: #e44c65;
+			box-shadow: none;
+			color: #ffffff !important;
+		}
+
+			input[type="submit"].primary:hover,
+			input[type="reset"].primary:hover,
+			input[type="button"].primary:hover,
+			.button.primary:hover {
+				background-color: #e76282;
+			}
+
+			input[type="submit"].primary:active,
+			input[type="reset"].primary:active,
+			input[type="button"].primary:active,
+			.button.primary:active {
+				background-color: #e13652;
+			}
+
+		input[type="submit"].disabled, input[type="submit"]:disabled,
+		input[type="reset"].disabled,
+		input[type="reset"]:disabled,
+		input[type="button"].disabled,
+		input[type="button"]:disabled,
+		.button.disabled,
+		.button:disabled {
+			background-color: rgba(255, 255, 255, 0.3) !important;
+			box-shadow: none !important;
+			color: #ffffff !important;
+			cursor: default;
+			opacity: 0.25;
+		}
+

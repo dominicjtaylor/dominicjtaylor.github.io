@@ -1,257 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <title>Dominic Taylor</title>
   <meta charset="UTF-8">
-  <title>Horizontal Scroll WebGL</title>
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      overflow: hidden;
-    }
-
-    /* Horizontal scroll container */
-    #horizontal-scroll {
-      width: 100vw;
-      height: 100vh;
-      overflow-x: scroll;
-      overflow-y: hidden;
-      scroll-snap-type: x mandatory;
-      display: flex;
-      scroll-behavior: smooth;
-    }
-
-    /* Wrapper for panels */
-    .panel-wrapper {
-      display: flex;
-      width: 500vw; /* 5 sections */
-      height: 100vh;
-    }
-
-/* WebGL canvas always at top, occupying 30% of viewport height after scroll */
-#webgl-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh; /* full initially */
-  z-index: -1;
-  pointer-events: none; /* don’t block scrolling */
-  transition: opacity 0.5s ease, top 0.5s ease, height 0.5s ease;
-}
-
-/* Overlay iframe for no-sidebar.html */
-#overlay-frame {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 5;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.8s ease;
-  border: none;
-  overflow-y: auto;
-}
-
-/* Panels scroll vertically */
-.panel {
-  width: 100vw;
-  min-height: 100vh; /* ensures full section height */
-  scroll-snap-align: start;
-  display: block;
-  overflow-y: auto;
-  font-family: 'Inter', sans-serif;
-  font-size: 2rem;
-  scrollbar-width: none;          /* Firefox */
-  -ms-overflow-style: none;
-<!-- background-color: #CFE6FA; -->
-}
-
-.panel::-webkit-scrollbar {
-  display: none;                  /* Chrome/Safari/Edge */
-}
-
-/* Header fills first 100vh */
-.panel-header {
-  min-height: 100vh;
-  color: #fff;
-
-  position: sticky;
-  z-index: 5;
-  height: 100dvh;
-  top: 0;
-}
-
-.panel-header-inner {
-	position: absolute;
-	left: 0;
-	width: 100%;
-	top: 50%;
-	transform: translateY(-50%);
-	z-index: 10;
-	pointer-events: none;
-	font-size: 2vw;
-
-  color: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  <!-- height: 100dvh;          /* full viewport, so <h1> starts centered */ -->
-}
-
-.panel-header h1 {
-	margin: 0;
-}
-
-.panel-header-inner.visible {
-	opacity: 0;
-	transform: translateY(0);
-}
-
-/* Content initially invisible */
-.panel-content {
-  max-width: 900px;
-  margin: 3.5rem auto;
-  font-size: 1rem;
-  color: #fff;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-  overflow-y: auto;
-}
-
-.panel-content.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* optional: fade WebGL slightly */
-#webgl-container.fade {
-  opacity: 0.3;
-  transition: opacity 0.8s ease-out;
-}
-
-.scroll-right {
-  position: fixed;
-  right: 15px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 30px;        /* length of the shaft */
-  height: 3px;        /* thickness of the shaft */
-  /*background: rgba(180,180,180,1); /* shaft color */
-  background: linear-gradient(to right,
-              rgba(150,150,150,0),   /* faded start */
-              rgba(150,150,150,1));
-  z-index: 9999;
-  pointer-events: none;
-}
-
-.scroll-left {
-  position: fixed;
-  left: 15px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 30px;        /* length of the shaft */
-  height: 3px;        /* thickness of the shaft */
-  /*background: rgba(180,180,180,1); /* shaft color */
-  background: linear-gradient(to left,
-              rgba(150,150,150,0),   /* faded start */
-              rgba(150,150,150,1));
-  z-index: 9999;
-  pointer-events: none;
-}
-
-.scroll-down {
-  position: fixed;
-  left: 50%;
-  bottom: 30px;
-  transform: translateX(-50%) rotate(90deg);;
-  width: 30px;        /* length of the shaft */
-  height: 3px;        /* thickness of the shaft */
-  /*background: rgba(180,180,180,1); /* shaft color */
-  background: linear-gradient(to right,
-              rgba(150,150,150,0),   /* faded start */
-              rgba(150,150,150,1));
-  z-index: 9999;
-  pointer-events: none;
-}
-
-/* Arrowhead */
-.scroll-right::before,
-.scroll-right::after {
-  content: '';
-  position: absolute;
-  right: 0;
-  top: 50%;
-  width: 12px;       /* length of diagonal lines */
-  height: 3px;       /* same thickness */
-  background: rgba(150,150,150,1);
-  transform-origin: right center;
-}
-
-.scroll-left::before,
-.scroll-left::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 50%;
-  width: 12px;       /* length of diagonal lines */
-  height: 3px;       /* same thickness */
-  background: rgba(150,150,150,1);
-  transform-origin: left center;
-}
-
-.scroll-down::before,
-.scroll-down::after {
-  content: '';
-  position: absolute;
-  right: 0;
-  top: 50%;
-  width: 12px;       /* length of diagonal lines */
-  height: 3px;       /* same thickness */
-  background: rgba(150,150,150,1);
-  transform-origin: right center;
-}
-
-.scroll-right::before {
-  transform: translateY(-70%) rotate(-45deg); /* upper diagonal */
-}
-.scroll-right::after {
-  transform: translateY(-20%) rotate(45deg); /* lower diagonal */
-}
-.scroll-left::before {
-  transform: translateY(-20%) rotate(-45deg); /* upper diagonal */
-}
-.scroll-left::after {
-  transform: translateY(-70%) rotate(45deg); /* lower diagonal */
-}
-.scroll-down::before {
-  transform: translateY(-60%) rotate(-45deg); /* upper diagonal */
-}
-.scroll-down::after {
-  transform: translateY(-40%) rotate(45deg); /* lower diagonal */
-}
-
-.no-sidebar-container {
-  width: 100%;
-  background: rgba(10, 10, 10, 0.1) !important;
-  color: white;
-}
-
-.no-sidebar-container h2 {
-  font-size: 2rem;
-  text-align: center;
-}
-
-  </style>
+  <link rel="stylesheet" href="webgl_styles.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
 
   <!-- WebGL canvas container -->
   <div id="webgl-container"></div>
+
+<div id="header-container"></div>
 
   <!-- Overlay iframe -->
   <!-- <iframe id="overlay" src="no-sidebar.html"></iframe> -->
@@ -379,6 +139,57 @@ document.querySelectorAll('.panel').forEach(panel => {
       } catch (err) {
         console.error(`Failed to load ${sectionHTML[sectionId]}:`, err);
       }
+    }
+  });
+});
+</script>
+
+<script>
+  async function loadHeader() {
+    try {
+      const response = await fetch('webgl_header.html');
+      const html = await response.text();
+      document.getElementById('header-container').innerHTML = html;
+    } catch (err) {
+      console.error('Failed to load header:', err);
+    }
+  }
+  loadHeader();
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const panels = Array.from(document.querySelectorAll(".panel"));
+  let currentPanelIndex = 0;
+
+  function scrollToPanel(index) {
+    if (index >= 0 && index < panels.length) {
+      panels[index].scrollIntoView({ behavior: "smooth", block: "start" });
+      currentPanelIndex = index;
+    }
+  }
+
+  // Arrow click handlers
+  document.querySelector(".scroll-left").addEventListener("click", () => {
+    const currentPanel = panels[currentPanelIndex];
+    if (currentPanel.scrollTop === 0) {
+      scrollToPanel(currentPanelIndex - 1);
+    }
+  });
+
+  document.querySelector(".scroll-right").addEventListener("click", () => {
+    const currentPanel = panels[currentPanelIndex];
+    if (currentPanel.scrollTop === 0) {
+      scrollToPanel(currentPanelIndex + 1);
+    }
+  });
+
+  document.querySelector(".scroll-down").addEventListener("click", () => {
+    const currentPanel = panels[currentPanelIndex];
+    const content = currentPanel.querySelector(".panel-content");
+    if (content) {
+      const offset = content.offsetTop; // distance of content from top of panel
+      currentPanel.scrollTo({ top: offset, behavior: "smooth" });
     }
   });
 });
